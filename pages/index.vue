@@ -2,36 +2,37 @@
   <div class="container">
     <div>
       <logo />
-      <h1 class="title">
-        task-management-tool
-      </h1>
-      <h2 class="subtitle">
-        My impeccable Nuxt.js project
-      </h2>
+      <h1 class="title">{{ title }}</h1>
+      <h2 class="subtitle">My impeccable Nuxt.js project</h2>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
+        <a href="https://nuxtjs.org/" target="_blank" class="button--green"
+          >Documentation</a
+        >
         <a
           href="https://github.com/nuxt/nuxt.js"
           target="_blank"
           class="button--grey"
+          >GitHub</a
         >
-          GitHub
-        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import { Component, Vue } from 'nuxt-property-decorator';
+import Logo from '~/components/Logo.vue';
 
-export default {
+@Component({
   components: {
     Logo
   }
+})
+class index extends Vue {
+  title = 'task-management-tool';
 }
+
+export default index;
 </script>
 
 <style>
