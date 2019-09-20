@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import marked from 'marked';
-import { taskObject } from '~/pages/todo.vue';
+import { taskInterface } from '~/store/task/type';
 import CustomButton from '~/components/atoms/CustomButton.vue';
 import CloseButton from '~/components/atoms/CloseButton.vue';
 
@@ -50,7 +50,7 @@ import CloseButton from '~/components/atoms/CloseButton.vue';
 })
 class TskCardDetailDescription extends Vue {
   @Prop({ type: Object, required: true })
-  task: taskObject;
+  task: taskInterface;
 
   isPreview: boolean = true;
   description: string = this.task.description;
@@ -69,16 +69,16 @@ class TskCardDetailDescription extends Vue {
     this.isPreview = !this.isPreview;
   }
 
+  /**
+   * タスクを更新する
+   */
   save(): void {
-    const task: taskObject = {
+    this.$store.commit('task/updateTask', {
       id: this.task.id,
-      name: this.task.name.trim(),
-      description: this.task.description,
-      list_id: this.task.list_id,
-      position: this.task.position,
-    };
+      name: this.task.name,
+      description: this.description,
+    });
 
-    console.log(task);
     this.togglePreview();
   }
 }

@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import { taskObject } from '~/pages/todo.vue';
 import TskCardDetailName from '~/components/molecules/TskCardDetailName.vue';
 import TskCardDetailDescription from '~/components/molecules/TskCardDetailDescription.vue';
+import { taskInterface } from '~/store/task/type';
 
 @Component({
   components: {
@@ -20,7 +20,7 @@ import TskCardDetailDescription from '~/components/molecules/TskCardDetailDescri
 })
 class TskCardDetail extends Vue {
   @Prop({ type: Object, required: true })
-  task: taskObject;
+  task: taskInterface;
 }
 
 export default TskCardDetail;

@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import { taskObject } from '~/pages/todo.vue';
 import validate from '~/Utility/Validation.ts';
+import { taskInterface } from '~/store/task/type';
 
 // validation rule
 const required = (value: string) => !!value.trim();
@@ -33,7 +33,7 @@ interface validationObject {
 @Component
 class TskDetailName extends Vue {
   @Prop({ type: Object, required: true })
-  task: taskObject;
+  task: taskInterface;
 
   taskName: string = this.task.name;
   taskDescription: string = this.task.description;
@@ -58,22 +58,20 @@ class TskDetailName extends Vue {
         : 'task-name--preview';
   }
 
+  /**
+   * タスクを更新する
+   */
   save(): void {
     if (!validate(this.validation)) {
       return;
     }
 
-    const task: taskObject = {
+    this.$store.commit('task/updateTask', {
       id: this.task.id,
       name: this.taskName.trim(),
       description: this.task.description,
-      list_id: this.task.list_id,
-      position: this.task.position,
-    };
+    });
 
-    console.log(task);
-
-    // TODO: vuexの関数
     this.togglePreview();
   }
 }
