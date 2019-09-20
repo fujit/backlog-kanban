@@ -24,6 +24,10 @@ html {
   margin: 0;
 }
 
+.button {
+  cursor: pointer;
+}
+
 .button--green {
   display: inline-block;
   border-radius: 4px;

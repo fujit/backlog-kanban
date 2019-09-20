@@ -15,7 +15,8 @@
       "@/*": ["./*"]
     },
     "types": ["@types/node", "@nuxt/types"],
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
   "exclude": ["node_modules"]
 }

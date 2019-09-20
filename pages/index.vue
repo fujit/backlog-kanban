@@ -25,8 +25,8 @@ import Logo from '~/components/Logo.vue';
 
 @Component({
   components: {
-    Logo
-  }
+    Logo,
+  },
 })
 class index extends Vue {
   title = 'task-management-tool';
