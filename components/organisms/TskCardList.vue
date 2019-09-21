@@ -10,6 +10,7 @@
         v-model="taskName"
         class="card-list--add-form--name"
         name="taskName"
+        maxlength="20"
       ></b-input>
       <div class="card-list-add-form-button">
         <b-button type="is-success" @click="addTask()">追加</b-button>
@@ -59,30 +60,17 @@ class TskCardList extends Vue {
   @Prop({ type: Object, required: true })
   status: statusListInterface;
 
-  taskList: taskInterface[] = this.$store.getters['task/sorted'];
   taskName: string = '';
   isShowForm: boolean = false;
 
+  get taskList(): taskInterface[] {
+    return this.$store.getters['task/sorted'];
+  }
+
   get taskListByStatus(): taskInterface[] {
-    return [
-      {
-        id: 0,
-        name: 'aaa',
-        description: '',
-        status_id: 0,
-        position: 1,
-      },
-      {
-        id: 1,
-        name: 'bbb',
-        description: '',
-        status_id: 0,
-        position: 2,
-      },
-    ];
-    // return this.taskList.filter(
-    //   (element) => element.status_id === this.status.id
-    // );
+    return this.taskList.filter(
+      (element) => element.status_id === this.status.id
+    );
   }
 
   get validation(): validationObject {
