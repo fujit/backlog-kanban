@@ -58,10 +58,11 @@ export default Card;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  width: 90%;
 
   &-title {
     font-size: 18px;
-    padding: 20px 10px 10px;
+    padding: 10px;
   }
 }
 </style>

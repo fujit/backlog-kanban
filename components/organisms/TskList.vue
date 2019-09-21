@@ -1,10 +1,6 @@
 <template>
   <div class="status-list">
-    <section
-      v-for="status in statusList"
-      :key="status.id"
-      class="status-list--header"
-    >
+    <section v-for="status in statusList" :key="status.id">
       <TskCardList :status="status" />
     </section>
   </div>
@@ -35,9 +31,6 @@ export default TskList;
 <style lang="scss" scoped>
 .status-list {
   display: inline-flex;
-}
-
-.status-list--header {
   margin: 10px;
 }
 </style>

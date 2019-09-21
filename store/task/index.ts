@@ -10,6 +10,9 @@ export const getters: Getters<S, G> = {
     const list = state.taskList.slice();
     return list.sort((a, b) => a.position - b.position);
   },
+  nextId(state) {
+    return state.taskList.reduce((a, b) => Math.max(a, b.id), 0) + 1;
+  }
 };
 
 export const mutations: Mutations<S, M> = {
@@ -45,15 +48,15 @@ export const mutations: Mutations<S, M> = {
     );
   },
   /**
-   * タスクが属しているリストを更新
+   * タスクの状態を更新
    * @param state
    * @param payload タスクのIDと更新先のリストID
    */
-  updateList(state, payload) {
+  updateStatus(state, payload) {
     const index = state.taskList.findIndex(
       (element: taskInterface) => element.id === payload.taskId
     );
 
-    state.taskList[index].list_id = payload.toListId;
+    state.taskList[index].status_id = payload.toStatusId;
   },
 };

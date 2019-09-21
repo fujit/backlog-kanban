@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import validate from '~/Utility/Validation.ts';
+import validate from '~/Utility/Validation';
 import { taskInterface } from '~/store/task/type';
 
 // validation rule
