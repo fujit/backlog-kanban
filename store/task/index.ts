@@ -1,5 +1,5 @@
-import { Getters, Mutations } from 'vuex';
-import { S, M, G, taskInterface } from './type';
+import { Getters, Mutations, Actions } from 'vuex';
+import { S, G, M, A, taskInterface } from './type';
 
 export const state = (): S => ({
   taskList: [],
@@ -60,3 +60,18 @@ export const mutations: Mutations<S, M> = {
     state.taskList[index].status_id = payload.toStatusId;
   },
 };
+
+export const actions: Actions<S, A, G, M> = {
+  asyncAddTask(ctx, payload) {
+    ctx.commit('addTask', payload);
+  },
+  asyncUpdateTask(ctx, payload) {
+    ctx.commit('updateTask', { id: payload.id, name: payload.name, description: payload.description });
+  },
+  asyncDeleteTask(ctx, payload) {
+    ctx.commit('deleteTask', { id: payload.id });
+  },
+  asyncUpdateStatus(ctx, payload) {
+    ctx.commit('updateStatus', { taskId: payload.taskId, toStatusId: payload.toStatusId });
+  }
+}

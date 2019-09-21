@@ -33,3 +33,17 @@ export interface RM {
   'task/deleteTasl': M['deleteTask'];
   'task/updateStatus': M['updateStatus'];
 }
+
+export interface A {
+  asyncAddTask: taskInterface;
+  asyncUpdateTask: { id: number, name: string, description: string };
+  asyncDeleteTask: { id: number };
+  asyncUpdateStatus: { taskId: number, toStatusId: number };
+}
+
+export interface RA {
+  'task/asyncAddTask': A['asyncAddTask'];
+  'task/asyncUpdateTask': A['asyncUpdateTask'];
+  'task/asyncDeleteTasl': A['asyncDeleteTask'];
+  'task/asyncUpdateStatus': A['asyncUpdateStatus'];
+}
