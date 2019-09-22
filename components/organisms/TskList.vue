@@ -1,9 +1,9 @@
 <template>
-  <div class="status-list">
+  <draggable v-model="statusList" class="status-list">
     <section v-for="status in statusList" :key="status.id">
       <TskCardList :status="status" />
     </section>
-  </div>
+  </draggable>
 </template>
 
 <script lang="ts">

@@ -18,7 +18,7 @@
       </div>
     </section>
 
-    <section>
+    <section :id="status.id">
       <div
         v-for="task in taskListByStatus"
         :key="task.id"
@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-// import draggable from 'vuedraggable';
 import { taskInterface } from '~/store/task/type';
 import { statusListInterface } from '~/store/statusList/type';
 import validate from '~/Utility/Validation';
@@ -53,7 +52,6 @@ interface validationObject {
 @Component({
   components: {
     Card,
-    // draggable,
   },
 })
 class TskCardList extends Vue {
