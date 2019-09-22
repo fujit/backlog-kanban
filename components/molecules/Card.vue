@@ -5,24 +5,16 @@
         <p>{{ task.name }}</p>
       </div>
     </section>
-    <!-- TODO: ループの外へ -->
-    <div v-if="isShow">
-      <ModalWrapper @close="closeModal()">
-        <TskCardDetail :task="task" @close="closeModal()" />
-      </ModalWrapper>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import TskCardDetail from '~/components/organisms/TskCardDetail.vue';
-import ModalWrapper from '~/components/molecules/ModalWrapper.vue';
 import { taskInterface } from '~/store/task/type';
+import TskCardDetail from '~/components/organisms/TskCardDetail.vue';
 
 @Component({
   components: {
-    ModalWrapper,
     TskCardDetail,
   },
 })
@@ -31,20 +23,19 @@ class Card extends Vue {
   task: taskInterface;
 
   /**
-   * 詳細モーダルの表示可否
-   */
-  isShow: boolean = false;
-
-  /**
    * タスク詳細モーダルを表示させる
    *
    */
   showModal(id: number): void {
-    this.isShow = true;
-  }
-
-  closeModal(): void {
-    this.isShow = false;
+    // TODO: 型定義
+    this.$buefy.modal.open({
+      props: {
+        task: this.task,
+      },
+      parent: this,
+      component: TskCardDetail,
+      'can-cancel': false,
+    });
   }
 }
 

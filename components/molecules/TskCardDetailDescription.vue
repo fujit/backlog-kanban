@@ -3,7 +3,7 @@
     <div class="task-description--menu">
       <span>タスクの詳細</span>
       <div v-show="isPreview" class="edit-button" @click="togglePreview()">
-        <CustomButton :value="'編集'" :color="'white'" />
+        <b-button type="is-success">編集</b-button>
       </div>
     </div>
 
@@ -29,8 +29,8 @@
     </div>
 
     <div v-show="!isPreview" class="task-description--menu--footer">
-      <CustomButton :value="'保存'" :color="'white'" @buttonEvent="save" />
-      <CloseButton @buttonEvent="togglePreview" />
+      <b-button type="is-success" @click="save">保存</b-button>
+      <CloseButton @buttonEvent="cancel()" />
     </div>
   </section>
 </template>
@@ -39,12 +39,10 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import marked from 'marked';
 import { taskInterface } from '~/store/task/type';
-import CustomButton from '~/components/atoms/CustomButton.vue';
 import CloseButton from '~/components/atoms/CloseButton.vue';
 
 @Component({
   components: {
-    CustomButton,
     CloseButton,
   },
 })
@@ -81,6 +79,14 @@ class TskCardDetailDescription extends Vue {
 
     this.togglePreview();
   }
+
+  /**
+   * タスクの編集を取り消す
+   */
+  cancel(): void {
+    this.description = this.task.description;
+    this.togglePreview();
+  }
 }
 export default TskCardDetailDescription;
 </script>
@@ -92,15 +98,12 @@ $contentHeight: 350px;
 
 .task-description--menu {
   display: flex;
+  align-items: center;
   margin-bottom: 10px;
 
   &--footer {
     margin-top: 20px;
   }
-}
-
-.edit-button {
-  margin-top: 20px;
 }
 
 .task-description--content {
@@ -116,14 +119,22 @@ $contentHeight: 350px;
   background-color: $backgroundColor;
   border: none;
   font-size: 1em;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
   &:focus {
     outline: none;
   }
 }
 
-.custom-button {
-  margin-right: 10px;
+.edit-button {
+  margin-left: 10px;
+}
+
+.task-description--menu--footer {
+  align-items: center;
+  display: flex;
+}
+
+.close-button {
+  margin-left: 10px;
 }
 </style>
