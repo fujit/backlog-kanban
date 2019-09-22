@@ -75,7 +75,7 @@ class TskDetailName extends Vue {
       isArchive: this.task.isArchive,
     };
 
-    this.$store.commit('task/updateTask', task);
+    this.$store.dispatch('task/asyncUpdateTask', task);
 
     this.togglePreview();
   }

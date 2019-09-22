@@ -80,7 +80,7 @@ class TskList extends Vue {
       name: this.statusListName.trim(),
       position: this.$store.getters['statusList/nextPosition'],
     };
-    this.$store.commit('statusList/add', statusListName);
+    this.$store.dispatch('statusList/asyncAdd', statusListName);
 
     this.hideForm();
   }

@@ -32,7 +32,7 @@ class TskCardDetail extends Vue {
   task: taskInterface;
 
   deleteTask(): void {
-    this.$store.commit('task/deleteTask', {
+    this.$store.dispatch('task/asyncDeleteTask', {
       id: this.task.id,
     });
 
@@ -49,7 +49,7 @@ class TskCardDetail extends Vue {
       isArchive: true,
     };
 
-    this.$store.commit('task/updateTask', task);
+    this.$store.dispatch('task/asyncUpdateTask', task);
     this.close();
   }
 

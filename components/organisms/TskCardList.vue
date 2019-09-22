@@ -127,7 +127,7 @@ class TskCardList extends Vue {
       position: this.nextPosition,
       isArchive: false,
     };
-    this.$store.commit('task/addTask', task);
+    this.$store.dispatch('task/asyncAddTask', task);
 
     this.hideForm();
   }
@@ -169,14 +169,14 @@ class TskCardList extends Vue {
       position: this.status.position,
     };
 
-    this.$store.commit('statusList/update', list);
+    this.$store.dispatch('statusList/asyncUpdate', list);
   }
 
   /**
    * ステータスリストを削除
    */
   deleteStatusList() {
-    this.$store.commit('statusList/delete', { id: this.status.id });
+    this.$store.dispatch('statusList/asyncDelete', { id: this.status.id });
   }
 }
 export default TskCardList;

@@ -79,7 +79,7 @@ class TskCardDetailDescription extends Vue {
       position: this.task.position,
       isArchive: this.task.isArchive,
     };
-    this.$store.commit('task/updateTask', task);
+    this.$store.dispatch('task/asyncUpdateTask', task);
 
     this.togglePreview();
   }
