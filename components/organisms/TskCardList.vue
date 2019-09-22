@@ -1,8 +1,29 @@
 <template>
   <div class="card-list">
     <section class="card-list--header">
-      <p class="card-list--title">{{ status.name }}</p>
-      <p v-show="!isShowForm" class="card-list--add" @click="showForm()">+</p>
+      <div class="card-list--title">
+        <p>{{ status.name }}</p>
+      </div>
+
+      <div v-show="!isShowForm" class="card-list--add" @click="showForm()">
+        <b-icon icon="plus" size="is-small"></b-icon>
+      </div>
+
+      <div class="card-list--menu">
+        <b-dropdown aria-role="list">
+          <b-icon
+            slot="trigger"
+            icon="dots-horizontal"
+            size="is-small"
+          ></b-icon>
+          <b-dropdown-item aria-role="listitem" @click="deleteStatusList()"
+            >リストを削除する</b-dropdown-item
+          >
+          <b-dropdown-item aria-role="listitem"
+            >アーカイブを再表示する</b-dropdown-item
+          >
+        </b-dropdown>
+      </div>
     </section>
 
     <section v-show="isShowForm" class="card-list-form">
@@ -119,6 +140,8 @@ class TskCardList extends Vue {
     this.isShowForm = false;
     this.taskName = '';
   }
+
+  deleteStatusList() {}
 }
 export default TskCardList;
 </script>
@@ -144,8 +167,15 @@ export default TskCardList;
 
 .card-list--add {
   position: absolute;
-  top: 5%;
-  right: 10%;
+  top: 3.5%;
+  right: 15%;
+  cursor: pointer;
+}
+
+.card-list--menu {
+  position: absolute;
+  top: 3.5%;
+  right: 5%;
   cursor: pointer;
 }
 
