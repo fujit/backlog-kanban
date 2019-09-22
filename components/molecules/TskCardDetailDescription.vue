@@ -110,6 +110,7 @@ $contentHeight: 350px;
   background-color: $backgroundColor;
   margin-right: 10px;
   height: $contentHeight;
+  width: 85%;
 }
 
 .task-description-form--edit--text {
