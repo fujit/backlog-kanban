@@ -8,7 +8,9 @@
     </div>
 
     <div class="side-bar-item">
-      <b-button type="is-light" icon-left="archive">アーカイブ</b-button>
+      <b-button type="is-light" icon-left="archive" @click="archive()"
+        >アーカイブ</b-button
+      >
     </div>
   </div>
 </template>
@@ -21,11 +23,14 @@ class TskCardDetailSidebar extends Vue {
   @Emit()
   del() {}
 
+  @Emit()
+  archive() {}
+
   deleteTask() {
     this.$buefy.dialog.confirm({
       title: 'タスクを削除する',
       message:
-        'タスクを削除してもよろしいですか？<br> この動作は取り消しできません。',
+        'タスクを削除してもよろしいですか？<br> この操作は取り消しできません。',
       confirmText: 'タスクを削除する',
       cancelText: 'キャンセル',
       type: 'is-danger',

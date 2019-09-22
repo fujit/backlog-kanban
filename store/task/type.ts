@@ -4,6 +4,7 @@ export interface taskInterface {
   description: string;
   status_id: number;
   position: number;
+  isArchive: boolean;
 }
 
 export interface S {
@@ -22,7 +23,7 @@ export interface RG {
 
 export interface M {
   addTask: taskInterface;
-  updateTask: { id: number, name: string, description: string };
+  updateTask: taskInterface,
   deleteTask: { id: number };
   updateStatus: { taskId: number, toStatusId: number };
 }
@@ -30,13 +31,13 @@ export interface M {
 export interface RM {
   'task/addTask': M['addTask'];
   'task/updateTask': M['updateTask'];
-  'task/deleteTasl': M['deleteTask'];
+  'task/deleteTask': M['deleteTask'];
   'task/updateStatus': M['updateStatus'];
 }
 
 export interface A {
   asyncAddTask: taskInterface;
-  asyncUpdateTask: { id: number, name: string, description: string };
+  asyncUpdateTask: taskInterface;
   asyncDeleteTask: { id: number };
   asyncUpdateStatus: { taskId: number, toStatusId: number };
 }
@@ -44,6 +45,6 @@ export interface A {
 export interface RA {
   'task/asyncAddTask': A['asyncAddTask'];
   'task/asyncUpdateTask': A['asyncUpdateTask'];
-  'task/asyncDeleteTasl': A['asyncDeleteTask'];
+  'task/asyncDeleteTask': A['asyncDeleteTask'];
   'task/asyncUpdateStatus': A['asyncUpdateStatus'];
 }

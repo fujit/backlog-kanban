@@ -98,13 +98,15 @@ class TskCardList extends Vue {
     if (!validate(this.validation)) {
       return;
     }
-    this.$store.commit('task/addTask', {
+    const task: taskInterface = {
       id: this.$store.getters['task/nextId'],
       name: this.taskName.trim(),
       description: '',
       status_id: this.status.id,
       position: this.nextPosition,
-    });
+      isArchive: false,
+    };
+    this.$store.commit('task/addTask', task);
 
     this.hideForm();
   }

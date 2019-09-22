@@ -8,7 +8,8 @@ export const state = (): S => ({
 export const getters: Getters<S, G> = {
   sorted(state) {
     const list = state.taskList.slice();
-    return list.sort((a, b) => a.position - b.position);
+    return list.filter(element => !element.isArchive)
+               .sort((a, b) => a.position - b.position);
   },
   nextId(state) {
     return state.taskList.reduce((a, b) => Math.max(a, b.id), 0) + 1;
@@ -34,8 +35,7 @@ export const mutations: Mutations<S, M> = {
       (element) => element.id === payload.id
     );
 
-    state.taskList[index].name = payload.name;
-    state.taskList[index].description = payload.description;
+    state.taskList[index] = payload;
   },
   /**
    * タスクを削除
@@ -66,7 +66,7 @@ export const actions: Actions<S, A, G, M> = {
     ctx.commit('addTask', payload);
   },
   asyncUpdateTask(ctx, payload) {
-    ctx.commit('updateTask', { id: payload.id, name: payload.name, description: payload.description });
+    ctx.commit('updateTask', payload);
   },
   asyncDeleteTask(ctx, payload) {
     ctx.commit('deleteTask', { id: payload.id });

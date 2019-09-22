@@ -6,7 +6,7 @@
     </div>
     <div class="card-detail-content">
       <TskCardDetailDescription :task="task" />
-      <TskCardDetailSidebar @del="deleteTask()" />
+      <TskCardDetailSidebar @del="deleteTask()" @archive="archiveTask()" />
     </div>
   </div>
 </template>
@@ -36,6 +36,20 @@ class TskCardDetail extends Vue {
       id: this.task.id,
     });
 
+    this.close();
+  }
+
+  archiveTask(): void {
+    const task: taskInterface = {
+      id: this.task.id,
+      name: this.task.name,
+      description: this.task.description,
+      status_id: this.task.status_id,
+      position: this.task.position,
+      isArchive: true,
+    };
+
+    this.$store.commit('task/updateTask', task);
     this.close();
   }
 

@@ -71,11 +71,15 @@ class TskCardDetailDescription extends Vue {
    * タスクを更新する
    */
   save(): void {
-    this.$store.commit('task/updateTask', {
+    const task: taskInterface = {
       id: this.task.id,
       name: this.task.name,
       description: this.description,
-    });
+      status_id: this.task.status_id,
+      position: this.task.position,
+      isArchive: this.task.isArchive,
+    };
+    this.$store.commit('task/updateTask', task);
 
     this.togglePreview();
   }
