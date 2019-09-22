@@ -16,11 +16,11 @@
             icon="dots-horizontal"
             size="is-small"
           ></b-icon>
+          <b-dropdown-item aria-role="listitem" @click="showChangeForm()"
+            >リスト名を変更する</b-dropdown-item
+          >
           <b-dropdown-item aria-role="listitem" @click="deleteStatusList()"
             >リストを削除する</b-dropdown-item
-          >
-          <b-dropdown-item aria-role="listitem"
-            >アーカイブを再表示する</b-dropdown-item
           >
         </b-dropdown>
       </div>
@@ -141,7 +141,43 @@ class TskCardList extends Vue {
     this.taskName = '';
   }
 
-  deleteStatusList() {}
+  showChangeForm(): void {
+    this.$buefy.dialog.prompt({
+      title: 'リスト名を変更する',
+      message: 'リスト名',
+      confirmText: '変更する',
+      cancelText: 'キャンセル',
+      inputAttrs: {
+        maxlength: 20,
+        value: this.status.name,
+      },
+      onConfirm: (value: string) => {
+        this.updateListName(value);
+      },
+    });
+  }
+
+  /**
+   * ステータスリスト名を変更
+   *
+   * @param name リスト名
+   */
+  updateListName(name: string) {
+    const list: statusListInterface = {
+      id: this.status.id,
+      name,
+      position: this.status.position,
+    };
+
+    this.$store.commit('statusList/update', list);
+  }
+
+  /**
+   * ステータスリストを削除
+   */
+  deleteStatusList() {
+    this.$store.commit('statusList/delete', { id: this.status.id });
+  }
 }
 export default TskCardList;
 </script>
