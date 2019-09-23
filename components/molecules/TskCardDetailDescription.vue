@@ -19,6 +19,7 @@
       <div v-show="!isPreview" class="task-description-form--edit">
         <textarea
           v-model="description"
+          v-validate="'max:300'"
           class="task-description-form--edit--text"
           name="description"
           autofocus
@@ -71,17 +72,21 @@ class TskCardDetailDescription extends Vue {
    * タスクを更新する
    */
   save(): void {
-    const task: taskInterface = {
-      id: this.task.id,
-      name: this.task.name,
-      description: this.description,
-      status_id: this.task.status_id,
-      position: this.task.position,
-      isArchive: this.task.isArchive,
-    };
-    this.$store.dispatch('task/asyncUpdateTask', task);
+    this.$validator.validateAll().then((result) => {
+      if (result) {
+        const task: taskInterface = {
+          id: this.task.id,
+          name: this.task.name,
+          description: this.description,
+          status_id: this.task.status_id,
+          position: this.task.position,
+          isArchive: this.task.isArchive,
+        };
+        this.$store.dispatch('task/asyncUpdateTask', task);
 
-    this.togglePreview();
+        this.togglePreview();
+      }
+    });
   }
 
   /**

@@ -2,6 +2,7 @@
   <section class="task-name">
     <input
       v-model="taskName"
+      v-validate="'required|max:20'"
       :class="'task-name--form ' + taskNameFormName"
       type="text"
       name="taskName"
@@ -15,20 +16,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import validate from '~/Utility/Validation';
 import { taskInterface } from '~/store/task/type';
-
-// validation rule
-const required = (value: string) => !!value.trim();
-const max = (value: string, limit: number) => value.length <= limit;
-const taskNameLimited = 20;
-
-interface validationObject {
-  taskName: {
-    required: boolean;
-    max: boolean;
-  };
-}
 
 @Component
 class TskDetailName extends Vue {
@@ -38,15 +26,6 @@ class TskDetailName extends Vue {
   taskName: string = this.task.name;
   taskDescription: string = this.task.description;
   taskNameFormName: string = 'task-name--preview';
-
-  get validation(): validationObject {
-    return {
-      taskName: {
-        required: required(this.taskName),
-        max: max(this.taskName, taskNameLimited),
-      },
-    };
-  }
 
   /**
    * タスク名のフォームのクラスを変更する
@@ -62,22 +41,22 @@ class TskDetailName extends Vue {
    * タスクを更新する
    */
   save(): void {
-    if (!validate(this.validation)) {
-      return;
-    }
+    this.$validator.validateAll().then((result) => {
+      if (result) {
+        const task: taskInterface = {
+          id: this.task.id,
+          name: this.taskName.trim(),
+          description: this.task.description,
+          status_id: this.task.status_id,
+          position: this.task.position,
+          isArchive: this.task.isArchive,
+        };
 
-    const task: taskInterface = {
-      id: this.task.id,
-      name: this.taskName.trim(),
-      description: this.task.description,
-      status_id: this.task.status_id,
-      position: this.task.position,
-      isArchive: this.task.isArchive,
-    };
+        this.$store.dispatch('task/asyncUpdateTask', task);
 
-    this.$store.dispatch('task/asyncUpdateTask', task);
-
-    this.togglePreview();
+        this.togglePreview();
+      }
+    });
   }
 }
 

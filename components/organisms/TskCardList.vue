@@ -29,6 +29,7 @@
     <section v-show="isShowForm" class="card-list-form">
       <b-input
         v-model="taskName"
+        v-validate="'required|max:20'"
         class="card-list--add-form--name"
         name="taskName"
         maxlength="20"
@@ -53,22 +54,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
+import { Validator } from 'vee-validate';
 import { taskInterface } from '~/store/task/type';
 import { statusListInterface } from '~/store/statusList/type';
-import validate from '~/Utility/Validation';
 import Card from '~/components/molecules/Card.vue';
-
-// TODO: 共通化
-const required = (value: string) => !!value.trim();
-const max = (value: string, limit: number) => value.length <= limit;
-const taskNameLimited = 20;
-
-interface validationObject {
-  taskName: {
-    required: boolean;
-    max: boolean;
-  };
-}
 
 @Component({
   components: {
@@ -92,15 +81,6 @@ class TskCardList extends Vue {
     );
   }
 
-  get validation(): validationObject {
-    return {
-      taskName: {
-        required: required(this.taskName),
-        max: max(this.taskName, taskNameLimited),
-      },
-    };
-  }
-
   /**
    * 次の配置位置を取得
    */
@@ -116,20 +96,22 @@ class TskCardList extends Vue {
    * タスクを追加
    */
   addTask(): void {
-    if (!validate(this.validation)) {
-      return;
-    }
-    const task: taskInterface = {
-      id: this.$store.getters['task/nextId'],
-      name: this.taskName.trim(),
-      description: '',
-      status_id: this.status.id,
-      position: this.nextPosition,
-      isArchive: false,
-    };
-    this.$store.dispatch('task/asyncAddTask', task);
+    const validator: Validator = this.$validator;
+    validator.validateAll().then((result) => {
+      if (result) {
+        const task: taskInterface = {
+          id: this.$store.getters['task/nextId'],
+          name: this.taskName.trim(),
+          description: '',
+          status_id: this.status.id,
+          position: this.nextPosition,
+          isArchive: false,
+        };
+        this.$store.dispatch('task/asyncAddTask', task);
 
-    this.hideForm();
+        this.hideForm();
+      }
+    });
   }
 
   showForm(): void {

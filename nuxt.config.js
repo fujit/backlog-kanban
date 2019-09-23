@@ -30,6 +30,7 @@ export default {
   plugins: [
     { src: '~/plugins/localStorage.js', ssr: false },
     { src: '~/plugins/vuedraggable.js', ssr: false },
+    { src: '~/plugins/vee-validate.ts', ssr: true },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -46,6 +47,12 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'nuxt-buefy',
+    [
+      'nuxt-validate',
+      {
+        lang: 'ja',
+      },
+    ],
   ],
   /*
    ** Axios module configuration
