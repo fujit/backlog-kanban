@@ -39,16 +39,18 @@
         <b-button type="is-light" @click="hideForm()">キャンセル</b-button>
       </div>
     </section>
-
-    <section :id="status.id">
-      <div
-        v-for="task in taskListByStatus"
-        :key="task.id"
-        class="card-list--content"
-      >
-        <Card :task="task" />
-      </div>
-    </section>
+    <client-only>
+      <draggable :id="status.id" group="taskListByStatus" @end="changeStatus">
+        <div
+          v-for="task in taskListByStatus"
+          :id="task.id"
+          :key="task.id"
+          class="card-list--content"
+        >
+          <Card :task="task" />
+        </div>
+      </draggable>
+    </client-only>
   </div>
 </template>
 
@@ -159,6 +161,20 @@ class TskCardList extends Vue {
    */
   deleteStatusList() {
     this.$store.dispatch('statusList/asyncDelete', { id: this.status.id });
+  }
+
+  /**
+   * タスクの状態を変更
+   */
+  changeStatus(event: any) {
+    if (event.to.id === event.from.id) {
+      return;
+    }
+
+    this.$store.dispatch('task/asyncUpdateStatus', {
+      taskId: parseInt(event.item.id, 10),
+      toStatusId: parseInt(event.to.id, 10),
+    });
   }
 }
 export default TskCardList;

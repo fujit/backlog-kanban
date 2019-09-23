@@ -1,10 +1,12 @@
 <template>
   <div class="task-list">
-    <section class="status-list">
-      <section v-for="status in statusList" :key="status.id">
-        <TskCardList :status="status" />
-      </section>
-    </section>
+    <client-only>
+      <draggable class="status-list" group="statusList">
+        <section v-for="status in statusList" :key="status.id">
+          <TskCardList :status="status" />
+        </section>
+      </draggable>
+    </client-only>
 
     <section class="status-list-add">
       <b-button
