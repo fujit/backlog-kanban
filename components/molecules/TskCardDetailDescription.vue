@@ -18,7 +18,7 @@
 
       <div v-show="!isPreview" class="task-description-form--edit">
         <textarea
-          v-model="description"
+          v-model="taskDescription"
           v-validate="'max:300'"
           class="task-description-form--edit--text"
           name="description"
@@ -30,16 +30,15 @@
     </div>
 
     <div v-show="!isPreview" class="task-description--menu--footer">
-      <b-button type="is-success" @click="save">保存</b-button>
+      <b-button type="is-success" @click="update">保存</b-button>
       <CloseButton @buttonEvent="cancel()" />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator';
+import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator';
 import marked from 'marked';
-import { taskInterface } from '~/store/task/type';
 import CloseButton from '~/components/atoms/CloseButton.vue';
 
 @Component({
@@ -48,17 +47,17 @@ import CloseButton from '~/components/atoms/CloseButton.vue';
   },
 })
 class TskCardDetailDescription extends Vue {
-  @Prop({ type: Object, required: true })
-  task: taskInterface;
+  @Prop({ type: String, required: true })
+  description: string;
 
   isPreview: boolean = true;
-  description: string = this.task.description;
+  taskDescription: string = this.description;
 
   /**
    * Markdown形式の文字列をHTMLに変換したデータ
    */
   get htmlDescription(): string {
-    return marked(this.description);
+    return marked(this.taskDescription);
   }
 
   /**
@@ -68,22 +67,16 @@ class TskCardDetailDescription extends Vue {
     this.isPreview = !this.isPreview;
   }
 
+  @Emit('update')
+  updateTaskDescription(description: string) {}
+
   /**
    * タスクを更新する
    */
-  save(): void {
+  update(): void {
     this.$validator.validateAll().then((result) => {
       if (result) {
-        const task: taskInterface = {
-          id: this.task.id,
-          name: this.task.name,
-          description: this.description,
-          status_id: this.task.status_id,
-          position: this.task.position,
-          isArchive: this.task.isArchive,
-        };
-        this.$store.dispatch('task/asyncUpdateTask', task);
-
+        this.updateTaskDescription(this.taskDescription);
         this.togglePreview();
       }
     });
@@ -93,7 +86,7 @@ class TskCardDetailDescription extends Vue {
    * タスクの編集を取り消す
    */
   cancel(): void {
-    this.description = this.task.description;
+    this.taskDescription = this.description;
     this.togglePreview();
   }
 }

@@ -5,7 +5,10 @@
       <CloseButton @buttonEvent="close" />
     </div>
     <div class="card-detail-content">
-      <TskCardDetailDescription :task="task" />
+      <TskCardDetailDescription
+        :description="task.description"
+        @update="updateTaskDescription"
+      />
       <TskCardDetailSidebar @del="deleteTask()" @archive="archiveTask()" />
     </div>
   </div>
@@ -49,6 +52,26 @@ class TskCardDetail extends Vue {
     this.$store.dispatch('task/asyncUpdateTask', task);
   }
 
+  /**
+   * タスクの詳細を更新する
+   *
+   * @param taskDescription タスク詳細
+   */
+  updateTaskDescription(taskDescription: string): void {
+    const task: taskInterface = {
+      id: this.task.id,
+      name: this.task.name,
+      description: taskDescription,
+      status_id: this.task.status_id,
+      position: this.task.position,
+      isArchive: this.task.isArchive,
+    };
+    this.$store.dispatch('task/asyncUpdateTask', task);
+  }
+
+  /**
+   * タスクを削除する
+   */
   deleteTask(): void {
     this.$store.dispatch('task/asyncDeleteTask', {
       id: this.task.id,
@@ -57,6 +80,9 @@ class TskCardDetail extends Vue {
     this.close();
   }
 
+  /**
+   * タスクをアーカイブ状態にする
+   */
   archiveTask(): void {
     const task: taskInterface = {
       id: this.task.id,
