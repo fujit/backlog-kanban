@@ -3,7 +3,10 @@
     <client-only>
       <draggable class="status-list" group="statusList">
         <section v-for="status in statusList" :key="status.id">
-          <TskCardList :status="status" />
+          <TskCardList
+            :status="status"
+            :task-list="getTaskListByStatus(status.id)"
+          />
         </section>
       </draggable>
     </client-only>
@@ -34,6 +37,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
 import { statusListInterface } from '~/store/statusList/type';
+import { taskInterface } from '~/store/task/type';
 import TskCardList from '~/components/organisms/TskCardList.vue';
 
 @Component({
@@ -46,7 +50,23 @@ class TskList extends Vue {
   statusListName: string = '';
 
   get statusList(): statusListInterface[] {
+    // TODO: state参照に変える
     return this.$store.getters['statusList/sorted'];
+  }
+
+  get taskList(): taskInterface[] {
+    return this.$store.state.task.taskList;
+  }
+
+  /**
+   * 状態ごとのタスクを取得
+   *
+   * @param statusId ステータスID
+   */
+  getTaskListByStatus(statusId: number): taskInterface[] {
+    return this.taskList.filter(
+      (element: taskInterface) => element.status_id === statusId
+    );
   }
 
   /**

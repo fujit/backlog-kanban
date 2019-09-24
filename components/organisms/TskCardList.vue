@@ -40,9 +40,9 @@
       </div>
     </section>
     <client-only>
-      <draggable :id="status.id" group="taskListByStatus" @end="changeStatus">
+      <draggable :id="status.id" group="taskList" @end="changeStatus">
         <div
-          v-for="task in taskListByStatus"
+          v-for="task in taskList"
           :id="task.id"
           :key="task.id"
           class="card-list--content"
@@ -70,18 +70,11 @@ class TskCardList extends Vue {
   @Prop({ type: Object, required: true })
   status: statusListInterface;
 
+  @Prop({ type: Array, required: true })
+  taskList: taskInterface[];
+
   taskName: string = '';
   isShowForm: boolean = false;
-
-  get taskList(): taskInterface[] {
-    return this.$store.getters['task/sorted'];
-  }
-
-  get taskListByStatus(): taskInterface[] {
-    return this.taskList.filter(
-      (element) => element.status_id === this.status.id
-    );
-  }
 
   /**
    * 次の配置位置を取得
