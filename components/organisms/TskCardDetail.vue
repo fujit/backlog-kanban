@@ -1,7 +1,7 @@
 <template>
   <div class="card-detail">
     <div class="card-detail--header">
-      <TskCardDetailName :task="task" />
+      <TskCardDetailName :name="task.name" @update="updateTaskName" />
       <CloseButton @buttonEvent="close" />
     </div>
     <div class="card-detail-content">
@@ -30,6 +30,24 @@ import CloseButton from '~/components/atoms/CloseButton.vue';
 class TskCardDetail extends Vue {
   @Prop({ type: Object, required: true })
   task: taskInterface;
+
+  /**
+   * タスク名を更新する
+   *
+   * @param taskName タスク名
+   */
+  updateTaskName(taskName: string): void {
+    const task: taskInterface = {
+      id: this.task.id,
+      name: taskName,
+      description: this.task.description,
+      status_id: this.task.status_id,
+      position: this.task.position,
+      isArchive: this.task.isArchive,
+    };
+
+    this.$store.dispatch('task/asyncUpdateTask', task);
+  }
 
   deleteTask(): void {
     this.$store.dispatch('task/asyncDeleteTask', {
