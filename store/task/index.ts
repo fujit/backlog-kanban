@@ -6,11 +6,6 @@ export const state = (): S => ({
 });
 
 export const getters: Getters<S, G> = {
-  sorted(state) {
-    const list = state.taskList.slice();
-    return list.filter(element => !element.isArchive)
-               .sort((a, b) => b.position - a.position);
-  },
   nextId(state) {
     return state.taskList.reduce((a, b) => Math.max(a, b.id), 0) + 1;
   }

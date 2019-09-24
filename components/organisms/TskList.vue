@@ -64,9 +64,12 @@ class TskList extends Vue {
    * @param statusId ステータスID
    */
   getTaskListByStatus(statusId: number): taskInterface[] {
-    return this.taskList.filter(
-      (element: taskInterface) => element.status_id === statusId
-    );
+    return this.taskList
+      .filter(
+        (element: taskInterface) =>
+          element.status_id === statusId && !element.isArchive
+      )
+      .sort((a, b) => b.position - a.position);
   }
 
   /**

@@ -12,12 +12,10 @@ export interface S {
 }
 
 export interface G {
-  sorted: taskInterface[];
   nextId: number;
 }
 
 export interface RG {
-  'task/sorted': G['sorted'];
   'task/nextId': G['nextId'];
 }
 
