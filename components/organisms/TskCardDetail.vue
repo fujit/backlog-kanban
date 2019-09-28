@@ -60,7 +60,7 @@ class TskCardDetail extends Vue {
   updateTaskDescription(taskDescription: string): void {
     const task: taskInterface = {
       id: this.task.id,
-      name: this.task.name,
+      name: this.task.name, // storeの値を取得する or 個別のupdate関数を作成する
       description: taskDescription,
       status_id: this.task.status_id,
       position: this.task.position,
@@ -109,7 +109,6 @@ export default TskCardDetail;
 .card-detail {
   background: #ffffff;
   position: relative;
-  padding-left: 10px;
   height: 520px; // 暫定
 }
 
@@ -124,6 +123,9 @@ export default TskCardDetail;
 }
 
 .card-detail-content {
-  position: relative;
+  display: flex;
+  align-content: flex-start;
+  justify-content: space-between;
+  margin: 0 10px;
 }
 </style>

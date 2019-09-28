@@ -47,18 +47,17 @@ export default TskCardDetailSidebar;
 
 <style lang="scss" scoped>
 .side-bar-content {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0%;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .side-bar-item {
-  margin: 10px 0;
-
   button {
     width: 100%;
+  }
+
+  &:nth-of-type(n + 2) {
+    margin-top: 10px;
   }
 }
 </style>

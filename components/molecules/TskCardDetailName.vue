@@ -64,7 +64,7 @@ export default TskDetailName;
   font-size: 1.5em;
   padding: 10px 10px 10px 5px;
   margin: 10px 0;
-  width: 400px;
+  width: 50%;
   border: none;
 
   &:focus {

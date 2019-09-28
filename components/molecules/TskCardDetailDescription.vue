@@ -1,37 +1,29 @@
 <template>
   <section class="task-description">
-    <div class="task-description--menu">
-      <span>タスクの詳細</span>
-      <div v-show="isPreview" class="edit-button" @click="togglePreview()">
-        <b-button type="is-success">編集</b-button>
-      </div>
+    <!-- TODO: 押下時textareaにフォーカスを当てる -->
+    <div
+      v-show="isPreview"
+      class="task-description-content--preview"
+      @click="togglePreview"
+    >
+      <!-- TODO: 改行したい -->
+      <div v-html="htmlDescription"></div>
     </div>
 
-    <div class="task-description--content">
-      <div
-        v-show="isPreview"
-        class="task-description-form--preview"
-        @click="togglePreview()"
-      >
-        <div v-html="htmlDescription"></div>
+    <div v-show="!isPreview" class="task-description-content--edit">
+      <!-- TODO: 高さを変える -->
+      <b-input
+        id="taskDescription"
+        v-model="taskDescription"
+        custom-class="has-fixed-size"
+        type="textarea"
+        autofocus
+        @blur="update"
+      ></b-input>
+      <div v-show="!isPreview" class="task-description-content--footer">
+        <b-button type="is-success" @click="update">保存</b-button>
+        <CloseButton class="close-button" @buttonEvent="cancel()" />
       </div>
-
-      <div v-show="!isPreview" class="task-description-form--edit">
-        <textarea
-          v-model="taskDescription"
-          v-validate="'max:300'"
-          class="task-description-form--edit--text"
-          name="description"
-          autofocus
-          rows="10"
-          maxlength="300"
-        />
-      </div>
-    </div>
-
-    <div v-show="!isPreview" class="task-description--menu--footer">
-      <b-button type="is-success" @click="update">保存</b-button>
-      <CloseButton @buttonEvent="cancel()" />
     </div>
   </section>
 </template>
@@ -94,47 +86,28 @@ export default TskCardDetailDescription;
 </script>
 
 <style lang="scss" scoped>
-// TODO: 定数定義
 $backgroundColor: aliceblue;
 $contentHeight: 350px;
+$contentWidth: 85%;
 
-.task-description--menu {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-
-  &--footer {
-    margin-top: 20px;
-  }
-}
-
-.task-description--content {
-  background-color: $backgroundColor;
-  margin-right: 10px;
+.task-description {
   height: $contentHeight;
-  width: 85%;
-}
+  width: $contentWidth;
 
-.task-description-form--edit--text {
-  width: 100%;
-  height: $contentHeight - 10;
-  resize: none;
-  background-color: $backgroundColor;
-  border: none;
-  font-size: 1em;
-
-  &:focus {
-    outline: none;
+  &-content--preview {
+    cursor: pointer;
+    height: 100%;
   }
-}
 
-.edit-button {
-  margin-left: 10px;
-}
+  &-content--edit {
+    height: 100%;
+  }
 
-.task-description--menu--footer {
-  align-items: center;
-  display: flex;
+  &-content--footer {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .close-button {
