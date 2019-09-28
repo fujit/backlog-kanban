@@ -7,10 +7,6 @@ export const state = ():S => ({
 });
 
 export const getters: Getters<S, G> = {
-  sorted(state) {
-    const list = state.statusList.slice();
-    return list.sort((a, b) => a.position - b.position);
-  },
   nextId(state) {
     return state.statusList.reduce((a, b) => Math.max(a, b.id), 0) + 1;
   },

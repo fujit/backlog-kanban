@@ -9,13 +9,13 @@ export interface S {
 }
 
 export interface G {
-  sorted: statusListInterface[];
   nextId: number;
   nextPosition: number;
 }
 
 export interface RG {
-  'statusList/sorted': G['sorted'];
+  'statusList/nextId': G['nextId'];
+  'statusList/nextPosition': G['nextPosition'];
 }
 
 export interface M {

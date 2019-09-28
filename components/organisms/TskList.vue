@@ -50,8 +50,7 @@ class TskList extends Vue {
   statusListName: string = '';
 
   get statusList(): statusListInterface[] {
-    // TODO: state参照に変える
-    return this.$store.getters['statusList/sorted'];
+    return this.$store.state.statusList.statusList;
   }
 
   get taskList(): taskInterface[] {
@@ -78,12 +77,12 @@ class TskList extends Vue {
   addStatusList(): void {
     this.$validator.validateAll().then((result) => {
       if (result) {
-        const statusListName: statusListInterface = {
+        const statusList: statusListInterface = {
           id: this.$store.getters['statusList/nextId'],
           name: this.statusListName.trim(),
           position: this.$store.getters['statusList/nextPosition'],
         };
-        this.$store.dispatch('statusList/asyncAdd', statusListName);
+        this.$store.dispatch('statusList/asyncAdd', statusList);
 
         this.hideForm();
       }
@@ -92,6 +91,7 @@ class TskList extends Vue {
 
   showForm(): void {
     this.isShowForm = true;
+    console.log(this.$store.state.statusList.statusList);
   }
 
   hideForm(): void {
