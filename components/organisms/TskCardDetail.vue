@@ -40,16 +40,10 @@ class TskCardDetail extends Vue {
    * @param taskName タスク名
    */
   updateTaskName(taskName: string): void {
-    const task: taskInterface = {
+    this.$store.dispatch('task/asyncUpdateName', {
       id: this.task.id,
       name: taskName,
-      description: this.task.description,
-      status_id: this.task.status_id,
-      position: this.task.position,
-      isArchive: this.task.isArchive,
-    };
-
-    this.$store.dispatch('task/asyncUpdateTask', task);
+    });
   }
 
   /**
@@ -58,15 +52,10 @@ class TskCardDetail extends Vue {
    * @param taskDescription タスク詳細
    */
   updateTaskDescription(taskDescription: string): void {
-    const task: taskInterface = {
+    this.$store.dispatch('task/asyncUpdateDescription', {
       id: this.task.id,
-      name: this.task.name, // storeの値を取得する or 個別のupdate関数を作成する
       description: taskDescription,
-      status_id: this.task.status_id,
-      position: this.task.position,
-      isArchive: this.task.isArchive,
-    };
-    this.$store.dispatch('task/asyncUpdateTask', task);
+    });
   }
 
   /**

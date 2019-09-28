@@ -18,7 +18,6 @@
         custom-class="has-fixed-size"
         type="textarea"
         autofocus
-        @blur="update"
       ></b-input>
       <div v-show="!isPreview" class="task-description-content--footer">
         <b-button type="is-success" @click="update">保存</b-button>
