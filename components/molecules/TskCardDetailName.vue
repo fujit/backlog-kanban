@@ -10,6 +10,7 @@
       maxlength="20"
       @focus="togglePreview()"
       @blur="update()"
+      @keyup.enter="update()"
     />
   </section>
 </template>

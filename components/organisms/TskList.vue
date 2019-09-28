@@ -19,16 +19,19 @@
         >リストを追加</b-button
       >
       <div v-show="isShowForm" class="status-list-add-form">
-        <b-input
-          v-model="statusListName"
-          v-validate="'required|max:20'"
-          name="statusListName"
-          maxlength="20"
-        ></b-input>
-        <div class="status-list-add-form-button">
-          <b-button type="is-success" @click="addStatusList()">追加</b-button>
-          <b-button type="is-light" @click="hideForm()">キャンセル</b-button>
-        </div>
+        <form @submit.prevent="addStatusList">
+          <b-input
+            id="statusListName"
+            v-model="statusListName"
+            v-validate="'required|max:20'"
+            name="statusListName"
+            maxlength="20"
+          ></b-input>
+          <div class="status-list-add-form-button">
+            <b-button type="is-success" native-type="submit">追加</b-button>
+            <b-button type="is-light" @click="hideForm()">キャンセル</b-button>
+          </div>
+        </form>
       </div>
     </section>
   </div>
@@ -91,7 +94,6 @@ class TskList extends Vue {
 
   showForm(): void {
     this.isShowForm = true;
-    console.log(this.$store.state.statusList.statusList);
   }
 
   hideForm(): void {

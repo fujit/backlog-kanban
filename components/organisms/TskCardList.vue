@@ -27,17 +27,19 @@
     </section>
 
     <section v-show="isShowForm" class="card-list-form">
-      <b-input
-        v-model="taskName"
-        v-validate="'required|max:20'"
-        class="card-list--add-form--name"
-        name="taskName"
-        maxlength="20"
-      ></b-input>
-      <div class="card-list-add-form-button">
-        <b-button type="is-success" @click="addTask()">追加</b-button>
-        <b-button type="is-light" @click="hideForm()">キャンセル</b-button>
-      </div>
+      <form @submit.prevent="addTask">
+        <b-input
+          v-model="taskName"
+          v-validate="'required|max:20'"
+          class="card-list--add-form--name"
+          name="taskName"
+          maxlength="20"
+        ></b-input>
+        <div class="card-list-add-form-button">
+          <b-button type="is-success" native-type="submit">追加</b-button>
+          <b-button type="is-light" @click="hideForm()">キャンセル</b-button>
+        </div>
+      </form>
     </section>
     <client-only>
       <draggable :id="status.id" group="taskList" @end="changeStatus">
