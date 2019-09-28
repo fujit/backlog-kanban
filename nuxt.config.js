@@ -30,7 +30,6 @@ export default {
   plugins: [
     { src: '~/plugins/localStorage.js', ssr: false },
     { src: '~/plugins/vuedraggable.js', ssr: false },
-    { src: '~/plugins/vee-validate.ts', ssr: true },
   ],
   /*
    ** Nuxt.js dev-modules
