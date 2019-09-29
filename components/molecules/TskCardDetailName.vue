@@ -43,7 +43,7 @@ class TskDetailName extends Vue {
     this.$validator.validateAll().then((result) => {
       if (result) {
         this.updateTaskName(this.taskName.trim());
-        this.togglePreview();
+        this.isPreview = true;
       }
     });
   }
