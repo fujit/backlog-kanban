@@ -1,12 +1,16 @@
 <template>
   <section class="task-description">
-    <!-- TODO: 押下時textareaにフォーカスを当てる -->
-    <div
-      v-show="isPreview"
-      class="task-description-content--preview"
-      @click="togglePreview"
-    >
-      <div v-html="htmlDescription"></div>
+    <div v-show="isPreview">
+      <div
+        v-if="taskDescription"
+        class="task-description-content--preview"
+        @click="togglePreview"
+      >
+        <div v-html="htmlDescription"></div>
+      </div>
+      <template v-if="!taskDescription">
+        <b-button type="is-success" @click="togglePreview">詳細を追加</b-button>
+      </template>
     </div>
 
     <div v-show="!isPreview" class="task-description-content--edit">
