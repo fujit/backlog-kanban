@@ -161,7 +161,18 @@ class TskCardList extends Vue {
    * ステータスリストを削除
    */
   deleteStatusList() {
-    this.$store.dispatch('statusList/asyncDelete', { id: this.status.id });
+    this.$buefy.dialog.confirm({
+      title: 'リストを削除する',
+      message:
+        'リストを削除してもよろしいですか？<br> この操作は取り消しできません。',
+      confirmText: 'リストを削除する',
+      cancelText: 'キャンセル',
+      type: 'is-danger',
+      hasIcon: true,
+      onConfirm: () => {
+        this.$store.dispatch('statusList/asyncDelete', { id: this.status.id });
+      },
+    });
   }
 
   /**
