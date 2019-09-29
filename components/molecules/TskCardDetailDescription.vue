@@ -96,6 +96,8 @@ $contentWidth: 85%;
   &-content--preview {
     cursor: pointer;
     height: 100%;
+    overflow-wrap: break-word;
+    overflow: auto;
   }
 
   &-content--edit {
