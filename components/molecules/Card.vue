@@ -44,12 +44,11 @@ export default Card;
 
 <style lang="scss" scoped>
 .card {
-  display: inline-block;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  width: 90%;
+  width: 100%;
 
   &-title {
     font-size: 18px;

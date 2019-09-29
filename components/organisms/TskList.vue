@@ -6,6 +6,7 @@
           <TskCardList
             :status="status"
             :task-list="getTaskListByStatus(status.id)"
+            class="tsk-card-list"
           />
         </section>
       </draggable>
@@ -109,11 +110,11 @@ export default TskList;
 .task-list {
   display: flex;
   align-items: flex-start;
-  margin-top: 10px;
+  margin: 10px 0 0 10px;
 }
 
 .status-list {
-  display: inline-flex;
+  display: flex;
 }
 
 .status-list-add {
@@ -122,5 +123,11 @@ export default TskList;
   &-button {
     margin-bottom: 10px;
   }
+}
+
+.tsk-card-list {
+  margin-right: 10px;
+  padding: 10px;
+  width: 280px;
 }
 </style>
