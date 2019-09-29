@@ -1,6 +1,6 @@
 <template>
   <a class="close-button" @click="$emit('buttonEvent')">
-    <img src="~/assets/img/close_btn.png" />
+    <b-icon icon="close" size="is-small" type="is-black"></b-icon>
   </a>
 </template>
 
