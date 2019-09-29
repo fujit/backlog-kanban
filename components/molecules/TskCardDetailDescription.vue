@@ -6,18 +6,16 @@
       class="task-description-content--preview"
       @click="togglePreview"
     >
-      <!-- TODO: 改行したい -->
       <div v-html="htmlDescription"></div>
     </div>
 
     <div v-show="!isPreview" class="task-description-content--edit">
-      <!-- TODO: 高さを変える -->
       <b-input
-        id="taskDescription"
         v-model="taskDescription"
         custom-class="has-fixed-size"
         type="textarea"
         autofocus
+        rows="15"
       ></b-input>
       <div v-show="!isPreview" class="task-description-content--footer">
         <b-button type="is-success" @click="update">保存</b-button>
@@ -86,16 +84,14 @@ export default TskCardDetailDescription;
 
 <style lang="scss" scoped>
 $backgroundColor: aliceblue;
-$contentHeight: 350px;
 $contentWidth: 85%;
 
 .task-description {
-  height: $contentHeight;
-  width: $contentWidth;
+  width: 85%;
 
   &-content--preview {
     cursor: pointer;
-    height: 100%;
+    height: 400px;
     overflow-wrap: break-word;
     overflow: auto;
   }
