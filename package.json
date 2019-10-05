@@ -9,7 +9,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "test": "jest"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
@@ -28,19 +29,27 @@
     "@nuxt/typescript-runtime": "^0.1.6",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.9.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^3.0.5",
+    "jest": "^24.9.0",
     "lint-staged": "^9.2.5",
     "node-sass": "^4.12.0",
     "prettier": "^1.16.4",
     "sass-loader": "^8.0.0",
+    "ts-jest": "^24.1.0",
     "ts-loader": "^6.1.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "vue-jest": "^3.0.5"
   },
   "husky": {
     "hooks": {
@@ -52,5 +61,19 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "moduleNameMapper": {
+      "^~/(.*)$": "<rootDir>/$1"
+    }
   }
 }
