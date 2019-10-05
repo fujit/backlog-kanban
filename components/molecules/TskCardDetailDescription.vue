@@ -1,27 +1,27 @@
 <template>
   <section class="task-description">
-    <div v-show="isPreview">
+    <div v-show="isPreview" class="task-description-preview">
       <div
         v-if="taskDescription"
-        class="task-description-content--preview"
+        class="task-description-content"
         @click="togglePreview"
-      >
-        <div v-html="htmlDescription"></div>
-      </div>
-      <template v-if="!taskDescription">
+        v-html="htmlDescription"
+      ></div>
+      <div v-if="!taskDescription" class="task-description-button">
         <b-button type="is-success" @click="togglePreview">詳細を追加</b-button>
-      </template>
+      </div>
     </div>
 
-    <div v-show="!isPreview" class="task-description-content--edit">
+    <div v-show="!isPreview" class="task-description-edit">
       <b-input
         v-model="taskDescription"
+        name="taskDescription"
         custom-class="has-fixed-size"
         type="textarea"
         autofocus
         rows="15"
       ></b-input>
-      <div v-show="!isPreview" class="task-description-content--footer">
+      <div class="task-description-footer">
         <b-button type="is-success" @click="update">保存</b-button>
         <CloseButton class="close-button" @buttonEvent="cancel()" />
       </div>
@@ -93,18 +93,18 @@ $contentWidth: 85%;
 .task-description {
   width: 85%;
 
-  &-content--preview {
+  &-content {
     cursor: pointer;
     height: 400px;
     overflow-wrap: break-word;
     overflow: auto;
   }
 
-  &-content--edit {
+  &-edit {
     height: 100%;
   }
 
-  &-content--footer {
+  &-footer {
     padding: 10px 0;
     display: flex;
     align-items: center;
