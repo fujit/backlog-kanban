@@ -4,7 +4,7 @@ import * as Task from '~/store/task/type';
 declare module 'vuex' {
   type Getters<S, G> = {
     [K in keyof G]: (
-      state: S, getters: G, rootState: RouteState, rootGetters: RouteGetters
+      state: S, getters?: G, rootState?: RouteState, rootGetters?: RouteGetters
     ) => G[K];
   }
 
