@@ -2,7 +2,7 @@
   <div>
     <section class="card">
       <div class="card-title">
-        <p>{{ task.name }}</p>
+        <p>{{ title }}</p>
       </div>
     </section>
   </div>
@@ -10,17 +10,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import { taskInterface } from '~/store/task/type';
-import TskCardDetail from '~/components/organisms/TskCardDetail.vue';
 
-@Component({
-  components: {
-    TskCardDetail,
-  },
-})
+@Component
 class Card extends Vue {
-  @Prop({ type: Object, required: true })
-  task: taskInterface;
+  @Prop({ type: String, required: true })
+  title: string;
 }
 
 export default Card;

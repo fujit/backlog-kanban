@@ -54,7 +54,7 @@
               class="card-list--cards"
               @click="showModal(task)"
             >
-              <Card :task="task" />
+              <Card :title="task.name" />
             </div>
           </draggable>
         </client-only>
