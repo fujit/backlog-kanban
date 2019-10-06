@@ -1,10 +1,5 @@
-import Vuex from 'vuex';
-import { createLocalVue } from '@vue/test-utils';
 import { getters, mutations } from '~/store/task/index';
 import { S, taskInterface } from '~/store/task/type';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('store/task', () => {
   let state: S;
