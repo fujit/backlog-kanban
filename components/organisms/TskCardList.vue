@@ -52,6 +52,7 @@
               :id="task.id"
               :key="task.id"
               class="card-list--cards"
+              @click="showModal(task)"
             >
               <Card :task="task" />
             </div>
@@ -68,10 +69,12 @@ import { Validator } from 'vee-validate';
 import { taskInterface } from '~/store/task/type';
 import { statusListInterface } from '~/store/statusList/type';
 import Card from '~/components/molecules/Card.vue';
+import TskCardDetail from '~/components/organisms/TskCardDetail.vue';
 
 @Component({
   components: {
     Card,
+    TskCardDetail,
   },
 })
 class TskCardList extends Vue {
@@ -186,6 +189,20 @@ class TskCardList extends Vue {
     this.$store.dispatch('task/asyncUpdateStatus', {
       taskId: parseInt(event.item.id, 10),
       toStatusId: parseInt(event.to.id, 10),
+    });
+  }
+
+  /**
+   * 詳細モーダルを開く
+   */
+  showModal(task: taskInterface): void {
+    this.$buefy.modal.open({
+      props: {
+        task,
+      },
+      parent: this,
+      component: TskCardDetail,
+      'can-cancel': false,
     });
   }
 }

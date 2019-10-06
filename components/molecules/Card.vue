@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="card" @click="showModal()">
+    <section class="card">
       <div class="card-title">
         <p>{{ task.name }}</p>
       </div>
@@ -21,22 +21,6 @@ import TskCardDetail from '~/components/organisms/TskCardDetail.vue';
 class Card extends Vue {
   @Prop({ type: Object, required: true })
   task: taskInterface;
-
-  /**
-   * タスク詳細モーダルを表示させる
-   *
-   */
-  showModal(id: number): void {
-    // TODO: 型定義
-    this.$buefy.modal.open({
-      props: {
-        task: this.task,
-      },
-      parent: this,
-      component: TskCardDetail,
-      'can-cancel': false,
-    });
-  }
 }
 
 export default Card;
