@@ -11,9 +11,7 @@ import TskList from '~/components/organisms/TskList.vue';
     TskList,
   },
 })
-class Task extends Vue {
-  title = 'Hello Nuxt project';
-}
+class Task extends Vue {}
 
 export default Task;
 </script>
