@@ -2,7 +2,7 @@
   <div class="card-detail">
     <div class="card-detail--header">
       <TskCardDetailName :name="task.name" @update="updateTaskName" />
-      <CloseButton @buttonEvent="close" />
+      <CloseButton @click.native="close" />
     </div>
     <div class="card-detail-content">
       <TskCardDetailDescription

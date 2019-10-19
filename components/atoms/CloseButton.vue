@@ -1,5 +1,5 @@
 <template>
-  <a class="close-button" @click="$emit('buttonEvent')">
+  <a class="close-button">
     <b-icon icon="close" size="is-small" type="is-black"></b-icon>
   </a>
 </template>

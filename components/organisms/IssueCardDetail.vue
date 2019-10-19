@@ -2,7 +2,7 @@
   <div class="card-detail">
     <div class="card-detail--header">
       <p>{{ issue.summary }}</p>
-      <CloseButton @buttonEvent="$emit('close')" />
+      <CloseButton @click.native="$emit('close')" />
     </div>
     <div class="card-detail-content">
       <section class="issue-description">

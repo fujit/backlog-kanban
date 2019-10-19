@@ -23,7 +23,7 @@
       ></b-input>
       <div class="task-description-footer">
         <b-button type="is-success" @click="update">保存</b-button>
-        <CloseButton class="close-button" @buttonEvent="cancel()" />
+        <CloseButton class="close-button" @click.native="cancel()" />
       </div>
     </div>
   </section>
