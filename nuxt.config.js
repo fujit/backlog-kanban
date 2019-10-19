@@ -30,6 +30,7 @@ export default {
   plugins: [
     { src: '~/plugins/localStorage.js', ssr: false },
     { src: '~/plugins/vuedraggable.js', ssr: false },
+    { src: '~/plugins/filter.ts', ssr: false },
   ],
   /*
    ** Nuxt.js dev-modules
