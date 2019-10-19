@@ -8,7 +8,7 @@
 
     <section class="card-list--contents">
       <client-only>
-        <draggable :id="status.id" group="issueList">
+        <draggable :id="status.id" group="issueList" @end="updateStatus">
           <div
             v-for="issue in issueList"
             :id="issue.id"
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
+import axios from 'axios';
 import { issueInterface } from '~/store/Issue/type';
 import IssueCard from '~/components/molecules/IssueCard.vue';
 import IssueCardDetail from '~/components/organisms/IssueCardDetail.vue';
@@ -41,6 +42,24 @@ class IssueCardList extends Vue {
 
   @Prop({ type: Array, required: true })
   issueList: issueInterface[];
+
+  /**
+   * タスクの状態を更新
+   */
+  updateStatus(event: any) {
+    const toID = event.to.id;
+    const fromID = event.from.id;
+    const issueKey = event.item.id;
+
+    if (toID === fromID || !issueKey) {
+      return;
+    }
+
+    axios.patch(`https://corej.backlog.jp/api/v2/issues/${issueKey}`, {
+      apiKey: '',
+      statusId: toID,
+    });
+  }
 
   showModal(issue: issueInterface) {
     this.$buefy.modal.open({
