@@ -1,6 +1,6 @@
 <template>
   <a class="close-button">
-    <b-icon icon="close" size="is-small" type="is-black"></b-icon>
+    <b-icon icon="close" size="is-small" type="is-black" />
   </a>
 </template>
 

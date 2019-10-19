@@ -1,7 +1,10 @@
 <template>
   <div class="card-detail">
     <div class="card-detail--header">
-      <p>{{ issue.summary }}</p>
+      <p>
+        <a :href="originalLink" target="_blank">{{ issue.summary }}</a>
+      </p>
+
       <CloseButton @click.native="$emit('close')" />
     </div>
     <div class="card-detail-content">
@@ -30,6 +33,11 @@ class IssueCardDetail extends Vue {
   get htmlDescription(): string {
     return marked(this.issue.description);
   }
+
+  get originalLink(): string {
+    // TODO: 環境変数定義
+    return `https://corej.backlog.jp/view/${this.issue.issueKey}`;
+  }
 }
 
 export default IssueCardDetail;
@@ -46,7 +54,19 @@ export default IssueCardDetail;
     p {
       font-weight: 600;
     }
+
+    a {
+      color: #000000;
+
+      &:hover {
+        color: #3273dc;
+      }
+    }
   }
+}
+
+.open-in-new {
+  cursor: pointer;
 }
 
 .close-button {
