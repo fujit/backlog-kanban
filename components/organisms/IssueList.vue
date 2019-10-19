@@ -57,7 +57,6 @@ class IssueList extends Vue {
   }
 
   created() {
-    // TODO: タイミングここで良い？リロードのたびに呼ばれてしまう
     this.$store.dispatch('issue/asyncSetIssueList');
   }
 }
