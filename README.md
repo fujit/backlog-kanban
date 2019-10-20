@@ -1,4 +1,4 @@
-# task-management-tool
+# backlog-kanban
 
 > My impeccable Nuxt.js project
 

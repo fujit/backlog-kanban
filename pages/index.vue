@@ -29,7 +29,7 @@ import Logo from '~/components/Logo.vue';
   },
 })
 class index extends Vue {
-  title = 'task-management-tool';
+  title = 'backlog-kanban';
 }
 
 export default index;
