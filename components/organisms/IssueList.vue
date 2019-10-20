@@ -33,18 +33,9 @@ interface status {
 class IssueList extends Vue {
   get statusList(): status[] {
     return [
-      {
-        id: 1,
-        name: '未対応',
-      },
-      {
-        id: 2,
-        name: '対応中',
-      },
-      {
-        id: 3,
-        name: '処理済',
-      },
+      { id: 1, name: '未対応' },
+      { id: 2, name: '対応中' },
+      { id: 3, name: '処理済' },
     ];
   }
 

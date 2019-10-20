@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
   mode: 'universal',
   /*
@@ -67,5 +69,9 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
+  },
+  env: {
+    BACKLOG_API_KEY: process.env.BACKLOG_API_KEY,
+    BACKLOG_BASE_URL: process.env.BACKLOG_BASE_URL,
   },
 };

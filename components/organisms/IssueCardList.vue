@@ -55,7 +55,7 @@ class IssueCardList extends Vue {
       return;
     }
 
-    axios.patch(`https://corej.backlog.jp/api/v2/issues/${issueKey}`, {
+    axios.patch(`${process.env.BACKLOG_BASE_URL}/api/v2/issues/${issueKey}`, {
       apiKey: '',
       statusId: toID,
     });

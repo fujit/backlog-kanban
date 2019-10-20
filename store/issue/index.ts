@@ -1,7 +1,6 @@
 import { Mutations, Actions }  from 'vuex';
 import { S, G, M, A, issueInterface } from './type';
 import axios from 'axios';
-import { taskInterface } from '../task/type';
 
 export const state = (): S => ({
   conditions: {
@@ -18,13 +17,15 @@ export const mutations: Mutations<S, M> = {
 
 export const actions: Actions<S, A, G, M> = {
   async asyncSetIssueList(ctx) {
-    // いくつかは環境変数に定義
-    await axios.get('https://corej.backlog.jp/api/v2/issues?', {
+    await axios.get(`${process.env.BACKLOG_BASE_URL}/api/v2/issues?`, {
       params: {
-        apiKey: '',
+        apiKey: process.env.BACKLOG_API_KEY,
         count: 100, // この辺はループで作成(stateの値を見たい)
-        projectId: [109284],
+        projectId: [109284, 110155],
         statusId: [1, 2, 3],
+        assigneeId: [273730],
+        sort: 'created',
+        createdSince: '2019-08-01',
       }
     }).then((res: any) => {
       const payload: issueInterface[] = res.data.map((element: any) => ({
@@ -43,8 +44,10 @@ export const actions: Actions<S, A, G, M> = {
         actualHours: element.actualHours,
         created: element.created,
         updated: element.updated,
-      }));
+      }))
       ctx.commit('setIssueList', { issueList: payload});
+    }).catch(error => {
+      console.error(error);
     })
   },
 }

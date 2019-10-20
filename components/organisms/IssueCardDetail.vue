@@ -35,8 +35,7 @@ class IssueCardDetail extends Vue {
   }
 
   get originalLink(): string {
-    // TODO: 環境変数定義
-    return `https://corej.backlog.jp/view/${this.issue.issueKey}`;
+    return `${process.env.BACKLOG_BASE_URL}/view/${this.issue.issueKey}`;
   }
 }
 
