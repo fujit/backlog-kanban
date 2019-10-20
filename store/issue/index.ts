@@ -4,7 +4,13 @@ import axios from 'axios';
 
 export const state = (): S => ({
   conditions: {
+    apiKey: process.env.BACKLOG_API_KEY,
     count: 100,
+    projectId: [109284, 110155],
+    statusId: [1, 2, 3],
+    assigneeId: [273730],
+    sort: 'created',
+    createdSince: '2019-08-01',
   },
   issueList: [],
 })
@@ -18,15 +24,7 @@ export const mutations: Mutations<S, M> = {
 export const actions: Actions<S, A, G, M> = {
   async asyncSetIssueList(ctx) {
     await axios.get(`${process.env.BACKLOG_BASE_URL}/api/v2/issues?`, {
-      params: {
-        apiKey: process.env.BACKLOG_API_KEY,
-        count: 100, // この辺はループで作成(stateの値を見たい)
-        projectId: [109284, 110155],
-        statusId: [1, 2, 3],
-        assigneeId: [273730],
-        sort: 'created',
-        createdSince: '2019-08-01',
-      }
+      params: ctx.state.conditions,
     }).then((res: any) => {
       const payload: issueInterface[] = res.data.map((element: any) => ({
         id: element.id,

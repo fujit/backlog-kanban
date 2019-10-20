@@ -23,6 +23,7 @@ interface status {
 }
 
 interface condition {
+  apiKey: string | undefined;
   projectId?: number[];
   issueTypeId?: number[];
   categoryId?: number[],
