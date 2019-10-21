@@ -19,7 +19,7 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import marked from 'marked';
 import CloseButton from '~/components/atoms/CloseButton.vue';
-import { issueInterface } from '~/store/Issue/type';
+import { issueInterface } from '~/store/issue/type';
 
 @Component({
   components: {

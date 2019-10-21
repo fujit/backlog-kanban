@@ -26,7 +26,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 import axios from 'axios';
-import { issueInterface } from '~/store/Issue/type';
+import { issueInterface } from '~/store/issue/type';
 import IssueCard from '~/components/molecules/IssueCard.vue';
 import IssueCardDetail from '~/components/organisms/IssueCardDetail.vue';
 
@@ -55,10 +55,9 @@ class IssueCardList extends Vue {
       return;
     }
 
-    axios.patch(`${process.env.BACKLOG_BASE_URL}/api/v2/issues/${issueKey}`, {
-      apiKey: '',
-      statusId: toID,
-    });
+    axios.patch(
+      `${process.env.BACKLOG_BASE_URL}/api/v2/issues/${issueKey}?apiKey=${process.env.BACKLOG_API_KEY}&statusId=${toID}`
+    );
   }
 
   showModal(issue: issueInterface) {
