@@ -1,22 +1,25 @@
 <template>
-  <div class="issue-list">
-    <template v-if="loading">
-      <p>Loading...</p>
-    </template>
-    <template v-else>
-      <client-only>
-        <draggable class="status-list" group="statusList">
-          <template v-for="status in statusList">
-            <IssueCardList
-              :key="status.id"
-              :status="status"
-              :issue-list="getIssueListByStatus(status.id)"
-              class="tsk-card-list"
-            />
-          </template>
-        </draggable>
-      </client-only>
-    </template>
+  <div>
+    <IssueConditionList @update="fetchIssues" />
+    <div class="issue-list">
+      <template v-if="loading">
+        <p>Loading...</p>
+      </template>
+      <template v-else>
+        <client-only>
+          <draggable class="status-list" group="statusList">
+            <template v-for="status in statusList">
+              <IssueCardList
+                :key="status.id"
+                :status="status"
+                :issue-list="getIssueListByStatus(status.id)"
+                class="tsk-card-list"
+              />
+            </template>
+          </draggable>
+        </client-only>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,7 @@
 import { Vue, Component } from 'nuxt-property-decorator';
 import axios from 'axios';
 import IssueCardList from '~/components/organisms/IssueCardList.vue';
+import IssueConditionList from '~/components/organisms/IssueConditionList.vue';
 import { issueInterface, condition } from '~/store/issue/type';
 
 interface status {
@@ -34,6 +38,7 @@ interface status {
 @Component({
   components: {
     IssueCardList,
+    IssueConditionList,
   },
 })
 class IssueList extends Vue {

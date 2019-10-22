@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator';
+import { Vue, Component, Emit } from 'nuxt-property-decorator';
 import { condition, project } from '~/store/issue/type';
 
 @Component
@@ -34,10 +34,14 @@ class IssueConditionList extends Vue {
     return this.$store.state.issue.projects;
   }
 
+  @Emit('update')
+  updateIssues() {}
+
   reFetch() {
     const newConditions = Object.assign({}, this.conditions);
     newConditions.projectId = this.selectedProjects;
     this.$store.dispatch('issue/asyncUpdateCondition', newConditions);
+    this.updateIssues();
   }
 }
 
