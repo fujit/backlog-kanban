@@ -22,15 +22,23 @@ interface status {
   name: string;
 }
 
-interface condition {
-  apiKey: string | undefined;
+export interface condition {
   projectId?: number[];
   issueTypeId?: number[];
-  categoryId?: number[],
+  categoryId?: number[];
   milestoneId?: number[];
   statusId?: number[];
   assigneeId?: number[];
-  sort?: 'issueType' | 'category' | 'milestone' | 'status' | 'created' | 'updated' | 'startDate' | 'dueDate' | 'assignee';
+  sort?:
+    | 'issueType'
+    | 'category'
+    | 'milestone'
+    | 'status'
+    | 'created'
+    | 'updated'
+    | 'startDate'
+    | 'dueDate'
+    | 'assignee';
   order?: 'asc' | 'desc';
   count?: number;
   createdSince?: string;
@@ -45,31 +53,36 @@ interface condition {
   keyword?: string;
 }
 
+export interface project {
+  id: number;
+  projectKey: string;
+  name: string;
+}
+
 export interface S {
   conditions: condition;
+  projects: project[];
   issueList: issueInterface[];
 }
 
-export interface G {
-
-};
+export interface G {}
 
 export interface M {
-  // updateCondition: { key: keyof condition, value: string | number[] }; // keyに対応するvalueの型を指定したい
+  updateCondition: condition;
   setIssueList: { issueList: issueInterface[] };
 }
 
 export interface RM {
-  // 'issue/updateCondition': M['updateCondition'];
+  'issue/updateCondition': M['updateCondition'];
   'issue/setIssueList': M['setIssueList'];
 }
 
 export interface A {
-  // asyncUpdateCondition: { key: keyof condition, value: string | number[] }; // keyに対応するvalueの型を指定したい
+  asyncUpdateCondition: condition;
   asyncSetIssueList: {};
 }
 
 export interface RA {
-  // 'issue/asyncUpdateCondition': A['asyncUpdateCondition'];
+  'issue/asyncUpdateCondition': A['asyncUpdateCondition'];
   'issue/asyncSetIssueList': A['asyncSetIssueList'];
 }

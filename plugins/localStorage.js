@@ -4,7 +4,7 @@ export default ({ store }) => {
   window.onNuxtReady(() => {
     createPersistedState({
       key: 'task-app',
-      paths: ['task', 'statusList'],
+      paths: ['task', 'statusList', 'issue.conditions'],
     })(store);
   });
 };
