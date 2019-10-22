@@ -17,7 +17,7 @@ export interface issueInterface {
   updated: string;
 }
 
-interface status {
+export interface status {
   id: number;
   name: string;
 }
@@ -62,6 +62,7 @@ export interface project {
 export interface S {
   conditions: condition;
   projects: project[];
+  statusList: status[];
 }
 
 export interface G {}

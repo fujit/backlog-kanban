@@ -1,13 +1,10 @@
 import { Mutations, Actions } from 'vuex';
 import { S, G, M, A, issueInterface } from './type';
-import axios from 'axios';
 
 export const state = (): S => ({
   conditions: {
     // count: 100,
-    // projectId: [109284, 110155],
     // statusId: [1, 2, 3],
-    // assigneeId: [273730],
     // sort: 'created',
     // createdSince: '2019-08-01',
   },
@@ -20,6 +17,11 @@ export const state = (): S => ({
       projectKey: 'MENTIONTRACKER',
       name: '【開発部】SocialResearch',
     },
+  ],
+  statusList: [
+    { id: 1, name: '未対応' },
+    { id: 2, name: '対応中' },
+    { id: 3, name: '処理済' },
   ],
 });
 

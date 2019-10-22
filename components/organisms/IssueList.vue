@@ -28,12 +28,7 @@ import { Vue, Component } from 'nuxt-property-decorator';
 import axios from 'axios';
 import IssueCardList from '~/components/organisms/IssueCardList.vue';
 import IssueConditionList from '~/components/organisms/IssueConditionList.vue';
-import { issueInterface, condition } from '~/store/issue/type';
-
-interface status {
-  id: number;
-  name: string;
-}
+import { issueInterface, condition, status } from '~/store/issue/type';
 
 @Component({
   components: {
@@ -46,11 +41,7 @@ class IssueList extends Vue {
   loading: boolean = true;
 
   get statusList(): status[] {
-    return [
-      { id: 1, name: '未対応' },
-      { id: 2, name: '対応中' },
-      { id: 3, name: '処理済' },
-    ];
+    return this.$store.state.issue.statusList;
   }
 
   get conditions(): condition {
@@ -61,7 +52,7 @@ class IssueList extends Vue {
     return this.issues.filter((element) => element.status.id === statusId);
   }
 
-  created() {
+  mounted() {
     this.fetchIssues();
   }
 
@@ -72,7 +63,9 @@ class IssueList extends Vue {
       this.conditions
     );
 
-    console.log('conditions -> ', conditions);
+    console.log('conditions -> ', this.conditions);
+    console.log(localStorage.getItem('task-app'));
+    console.log('store -> ', this.$store.state.issue);
 
     axios
       .get(`${process.env.BACKLOG_BASE_URL}/api/v2/issues?`, {
@@ -118,6 +111,7 @@ export default IssueList;
 
 .status-list {
   display: flex;
+  width: 100%;
 }
 
 .tsk-card-list {
