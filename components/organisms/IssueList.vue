@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IssueConditionList @update="fetchIssues" />
+    <IssueConditionList class="condition-list" @update="fetchIssues" />
     <div class="issue-list">
       <template v-if="loading">
         <p>Loading...</p>
@@ -40,8 +40,13 @@ class IssueList extends Vue {
   issues: issueInterface[] = [];
   loading: boolean = true;
 
+  /**
+   * 状態一覧のうち、条件に指定したものだけを取得
+   */
   get statusList(): status[] {
-    return this.$store.state.issue.statusList;
+    return this.$store.state.issue.statusList.filter((element: status) =>
+      this.$store.state.issue.conditions.statusId.includes(element.id)
+    );
   }
 
   get conditions(): condition {
@@ -118,5 +123,9 @@ export default IssueList;
   margin-right: 10px;
   padding: 10px;
   width: 100%;
+}
+
+.condition-list {
+  margin: 10px;
 }
 </style>
