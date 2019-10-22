@@ -62,27 +62,22 @@ export interface project {
 export interface S {
   conditions: condition;
   projects: project[];
-  issueList: issueInterface[];
 }
 
 export interface G {}
 
 export interface M {
   updateCondition: condition;
-  setIssueList: { issueList: issueInterface[] };
 }
 
 export interface RM {
   'issue/updateCondition': M['updateCondition'];
-  'issue/setIssueList': M['setIssueList'];
 }
 
 export interface A {
   asyncUpdateCondition: condition;
-  asyncSetIssueList: {};
 }
 
 export interface RA {
   'issue/asyncUpdateCondition': A['asyncUpdateCondition'];
-  'issue/asyncSetIssueList': A['asyncSetIssueList'];
 }

@@ -24,7 +24,7 @@ import { condition, project } from '~/store/issue/type';
 
 @Component
 class IssueConditionList extends Vue {
-  selectedProjects: number[] | undefined = this.conditions.projectId;
+  selectedProjects: number[] = this.conditions.projectId || [];
 
   get conditions(): condition {
     return this.$store.state.issue.conditions;
