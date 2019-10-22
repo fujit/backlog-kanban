@@ -1,39 +1,46 @@
 <template>
-  <div>
-    <form @submit.prevent="updateConditions">
-      <template v-for="project in projects">
-        <input
-          :id="project.projectKey"
-          :key="project.id"
-          v-model="selectedProjects"
-          type="checkbox"
-          :name="project.projectKey"
-          :value="project.id"
+  <form @submit.prevent="updateConditions">
+    <template v-for="project in projects">
+      <b-checkbox
+        :key="project.id"
+        v-model="selectedProjects"
+        :native-value="project.id"
+        :name="project.projectKey"
+        >{{ project.name }}</b-checkbox
+      >
+    </template>
+
+    <br />
+    <div class="count-form">
+      <b-field label="件数">
+        <b-input
+          id="count"
+          v-model="count"
+          type="number"
+          min="1"
+          max="100"
+          placeholder="件数"
         />
-        {{ project.name }}
-      </template>
+      </b-field>
+    </div>
 
-      <br />件数:
-      <input v-model="count" type="number" name="count" />
+    <br />
+    <template v-for="status in statusList">
+      <b-checkbox
+        :key="status.id"
+        v-model="selectedStatus"
+        :native-value="status.id"
+        :name="status.name"
+        >{{ status.name }}</b-checkbox
+      >
+    </template>
 
-      <br />
-      <template v-for="status in statusList">
-        <input
-          :id="status.id"
-          :key="status.id"
-          v-model="selectedStatus"
-          type="checkbox"
-          :name="status.name"
-          :value="status.id"
-        />
-        {{ status.name }}
-      </template>
+    <br />
+    <b-radio v-model="assigneeId" :native-value="[ownId]">自分だけ</b-radio>
+    <b-radio v-model="assigneeId" :native-value="[]">全員</b-radio>
 
-      <br />自分だけ
-      <input id="onw-only" v-model="ownOnly" type="checkbox" name="own-only" />
-      <b-button type="is-success" native-type="submit">更新</b-button>
-    </form>
-  </div>
+    <b-button type="is-success" native-type="submit">更新</b-button>
+  </form>
 </template>
 
 <script lang="ts">
@@ -47,6 +54,7 @@ class IssueConditionList extends Vue {
   selectedStatus: number[] = this.conditions.statusId || [];
   count: number = this.conditions.count || 100;
   ownOnly: boolean = true;
+  assigneeId: number[] = [];
 
   get conditions(): condition {
     return this.$store.state.issue.conditions;
@@ -60,6 +68,14 @@ class IssueConditionList extends Vue {
     return this.$store.state.issue.statusList;
   }
 
+  get ownId(): number {
+    if (!process.env.BACKLOG_OWN_ID) {
+      return 0;
+    }
+
+    return parseInt(process.env.BACKLOG_OWN_ID, 10);
+  }
+
   @Emit('update')
   updateIssues() {}
 
@@ -69,11 +85,7 @@ class IssueConditionList extends Vue {
     newConditions.projectId = this.selectedProjects;
     newConditions.count = this.count;
     newConditions.statusId = this.selectedStatus;
-    newConditions.assigneeId = [];
-    // if (this.ownOnly && process.env.BACKLOG_OWN_ID !== undefined) {
-    //   const ownId = parseInt(process.env.BACKLOG_OWN_ID, 10);
-    //   newConditions.assigneeId = [ownId];
-    // }
+    newConditions.assigneeId = this.assigneeId;
 
     this.$store.dispatch('issue/asyncUpdateCondition', newConditions);
     this.updateIssues();
@@ -82,3 +94,9 @@ class IssueConditionList extends Vue {
 
 export default IssueConditionList;
 </script>
+
+<style lang="scss" scoped>
+.count-form {
+  width: 100px;
+}
+</style>
