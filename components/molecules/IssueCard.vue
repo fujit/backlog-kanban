@@ -12,12 +12,12 @@
 
         <p>
           マイルストーン:
-          <template v-if="issue.milestone.length > 0">
-            {{ issue.milestone[0].name }}
-          </template>
+          <template v-if="issue.milestone.length > 0">{{
+            issue.milestone[0].name
+          }}</template>
         </p>
 
-        <small>{{ issue.created | formatDate('YYYY-MM-DD') }}</small>
+        <small>{{ issue.created | formatDate() }}</small>
       </div>
     </section>
   </div>

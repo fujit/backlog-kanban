@@ -1,6 +1,8 @@
 import Vue from 'vue';
-import moment from 'moment';
+import DateUtil from '~/utility/DateUtil';
 
-Vue.filter('formatDate', (value: string, format: string) => {
-  return moment(value).format(format);
+const dateUtil = DateUtil.instance;
+
+Vue.filter('formatDate', (value: string, format?: string) => {
+  return dateUtil.formatDate(value, format);
 });

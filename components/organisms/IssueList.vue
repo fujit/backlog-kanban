@@ -68,10 +68,6 @@ class IssueList extends Vue {
       this.conditions
     );
 
-    console.log('conditions -> ', this.conditions);
-    console.log(localStorage.getItem('task-app'));
-    console.log('store -> ', this.$store.state.issue);
-
     axios
       .get(`${process.env.BACKLOG_BASE_URL}/api/v2/issues?`, {
         params: conditions,
