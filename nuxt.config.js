@@ -73,5 +73,6 @@ export default {
   env: {
     BACKLOG_API_KEY: process.env.BACKLOG_API_KEY,
     BACKLOG_BASE_URL: process.env.BACKLOG_BASE_URL,
+    BACKLOG_OWN_ID: process.env.BACKLOG_OWN_ID || 0,
   },
 };
