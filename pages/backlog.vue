@@ -13,7 +13,11 @@ import IssueList from '~/components/organisms/IssueList.vue';
     IssueList,
   },
 })
-class Backlog extends Vue {}
+class Backlog extends Vue {
+  mounted() {
+    this.$store.dispatch('issue/asyncFetchProjects');
+  }
+}
 
 export default Backlog;
 </script>

@@ -69,16 +69,20 @@ export interface G {}
 
 export interface M {
   updateCondition: condition;
+  fetchProjects: project[];
 }
 
 export interface RM {
   'issue/updateCondition': M['updateCondition'];
+  'issue/fetchProjects': M['fetchProjects'];
 }
 
 export interface A {
   asyncUpdateCondition: condition;
+  asyncFetchProjects: {};
 }
 
 export interface RA {
   'issue/asyncUpdateCondition': A['asyncUpdateCondition'];
+  'issue/asyncFetchProjects': A['asyncFetchProjects'];
 }
