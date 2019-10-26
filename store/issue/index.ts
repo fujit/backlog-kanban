@@ -10,7 +10,14 @@ export const state = (): S => ({
     projectId: [110155],
     // createdSince: '2019-08-01',
   },
-  projects: [],
+  projects: [
+    {
+      id: 110155,
+      projectKey: 'MENTIONTRACKER',
+      name: 'SocialResearch',
+    },
+  ],
+  milestones: [],
   statusList: [
     { id: 1, name: '未対応' },
     { id: 2, name: '対応中' },

@@ -59,9 +59,18 @@ export interface project {
   name: string;
 }
 
+export interface milestone {
+  id: number;
+  projectId: number;
+  name: string;
+  displayOrder: number;
+  displayName: string;
+}
+
 export interface S {
   conditions: condition;
   projects: project[];
+  milestones: milestone[];
   statusList: status[];
 }
 

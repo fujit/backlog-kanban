@@ -53,12 +53,12 @@ class IssueList extends Vue {
     return this.$store.state.issue.conditions;
   }
 
-  getIssueListByStatus(statusId: number): issueInterface[] {
-    return this.issues.filter((element) => element.status.id === statusId);
-  }
-
   mounted() {
     this.fetchIssues();
+  }
+
+  getIssueListByStatus(statusId: number): issueInterface[] {
+    return this.issues.filter((element) => element.status.id === statusId);
   }
 
   fetchIssues() {

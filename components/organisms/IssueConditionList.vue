@@ -6,6 +6,7 @@
         v-model="selectedProjects"
         :native-value="project.id"
         :name="project.projectKey"
+        @input="updateMilestones()"
         >{{ project.name }}</b-checkbox
       >
     </template>
@@ -36,16 +37,28 @@
     </template>
 
     <br />
+    <b-taginput
+      v-model="selectedMilstones"
+      :data="filteredMilstones"
+      autocomplete
+      :open-on-focus="true"
+      field="displayName"
+      icon="label"
+      placeholder="Add a milestone"
+      @typing="getFilteredTags"
+    ></b-taginput>
+
+    <br />
     <b-radio v-model="assigneeId" :native-value="[ownId]">自分だけ</b-radio>
     <b-radio v-model="assigneeId" :native-value="[]">全員</b-radio>
-
     <b-button type="is-success" native-type="submit">更新</b-button>
   </form>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Emit } from 'nuxt-property-decorator';
-import { condition, project, status } from '~/store/issue/type';
+import axios from 'axios';
+import { condition, project, status, milestone } from '~/store/issue/type';
 
 @Component
 class IssueConditionList extends Vue {
@@ -53,8 +66,10 @@ class IssueConditionList extends Vue {
   selectedProjects: number[] = this.conditions.projectId || [];
   selectedStatus: number[] = this.conditions.statusId || [];
   count: number = this.conditions.count || 100;
-  ownOnly: boolean = true;
-  assigneeId: number[] = [];
+  assigneeId: number[] = [this.ownId];
+  milestones: milestone[] = [];
+  selectedMilstones: milestone[] = [];
+  filteredMilstones: milestone[] = this.milestones;
 
   get conditions(): condition {
     return this.$store.state.issue.conditions;
@@ -76,6 +91,69 @@ class IssueConditionList extends Vue {
     return parseInt(process.env.BACKLOG_OWN_ID, 10);
   }
 
+  async mounted() {
+    await this.updateMilestones();
+  }
+
+  /**
+   * 選択できるマイルストーンを更新する
+   */
+  async updateMilestones() {
+    const milestones = await Promise.all(
+      await this.selectedProjects.map((id) => this.getMilestones(id))
+    );
+    this.milestones = this.filteredMilstones = milestones.flat();
+  }
+
+  /**
+   * マイルストーン一覧を取得
+   */
+  async getMilestones(projectId: number): Promise<milestone[]> {
+    const res = await axios.get(
+      `${process.env.BACKLOG_BASE_URL}/api/v2/projects/${projectId}/versions`,
+      {
+        params: {
+          apiKey: process.env.BACKLOG_API_KEY,
+        },
+      }
+    );
+
+    return res.data.map((element: any) => {
+      const projectName = this.getProjectName(element.projectId);
+
+      return {
+        id: element.id,
+        projectId: element.projectId,
+        name: element.name,
+        displayOrder: element.displayOrder,
+        displayName: `${projectName}: ${element.name}`,
+      };
+    });
+  }
+
+  /**
+   * 選択できるタグを絞り込んで表示する
+   * @param text 入力値
+   */
+  getFilteredTags(text: string): void {
+    this.filteredMilstones = this.milestones.filter((milestone) =>
+      milestone.name
+        .toString()
+        .toLowerCase()
+        .includes(text.toLowerCase())
+    );
+  }
+
+  /**
+   * idに対応するプロジェクト名を取得
+   *
+   * @param id プロジェクトID
+   */
+  getProjectName(id: number): string {
+    const project = this.projects.filter((project) => project.id === id);
+    return project.length > 0 ? project[0].name : '';
+  }
+
   @Emit('update')
   updateIssues() {}
 
@@ -86,6 +164,9 @@ class IssueConditionList extends Vue {
     newConditions.count = this.count;
     newConditions.statusId = this.selectedStatus;
     newConditions.assigneeId = this.assigneeId;
+    newConditions.milestoneId = this.selectedMilstones.map(
+      (milestone) => milestone.id
+    );
 
     this.$store.dispatch('issue/asyncUpdateCondition', newConditions);
     this.updateIssues();
