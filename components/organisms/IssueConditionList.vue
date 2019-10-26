@@ -1,5 +1,6 @@
 <template>
   <div class="modal-content">
+    <CloseButton @click.native="close" />
     <form @submit.prevent="updateConditions">
       <template v-for="project in projects">
         <b-checkbox
@@ -61,8 +62,13 @@
 import { Vue, Component, Emit } from 'nuxt-property-decorator';
 import axios from 'axios';
 import { condition, project, status, milestone } from '~/store/issue/type';
+import CloseButton from '~/components/atoms/CloseButton.vue';
 
-@Component
+@Component({
+  components: {
+    CloseButton,
+  },
+})
 class IssueConditionList extends Vue {
   // TODO: リロード時うまくいかない
   selectedProjects: number[] = this.conditions.projectId || [];
@@ -178,6 +184,10 @@ class IssueConditionList extends Vue {
 
     this.$store.dispatch('issue/asyncUpdateCondition', newConditions);
     this.updateIssues();
+    this.close();
+  }
+
+  close() {
     this.$emit('close');
   }
 }
@@ -192,7 +202,14 @@ export default IssueConditionList;
   height: 400px;
   padding: 20px;
 }
+
 .count-form {
   width: 100px;
+}
+
+.close-button {
+  position: absolute;
+  top: 2%;
+  right: 1%;
 }
 </style>
