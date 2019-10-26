@@ -12,10 +12,15 @@
           </p>
 
           <p class="text-small">
+            種別:
+            {{ issue.issueType.name }}
+          </p>
+
+          <p class="text-small">
             マイルストーン:
-            <template v-if="issue.milestone.length > 0">{{
-              issue.milestone[0].name
-            }}</template>
+            <template v-if="issue.milestone.length > 0">
+              {{ issue.milestone[0].name }}
+            </template>
           </p>
         </div>
       </div>

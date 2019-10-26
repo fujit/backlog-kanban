@@ -77,6 +77,7 @@ class IssueList extends Vue {
           id: element.id,
           projectId: element.projectId,
           issueKey: element.issueKey,
+          issueType: element.issueType,
           summary: element.summary,
           description: element.description,
           status: element.status,
