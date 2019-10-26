@@ -38,7 +38,6 @@
       </template>
 
       <br />
-      <!-- モーダルを閉じても消さない -->
       <b-taginput
         v-model="selectedMilstones"
         :data="filteredMilstones"
@@ -96,6 +95,12 @@ class IssueConditionList extends Vue {
 
   async mounted() {
     await this.updateMilestones();
+
+    this.selectedMilstones = this.milestones.filter(
+      (milestone) =>
+        this.conditions.milestoneId &&
+        this.conditions.milestoneId.includes(milestone.id)
+    );
   }
 
   /**
