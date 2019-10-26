@@ -1,58 +1,61 @@
 <template>
-  <form @submit.prevent="updateConditions">
-    <template v-for="project in projects">
-      <b-checkbox
-        :key="project.id"
-        v-model="selectedProjects"
-        :native-value="project.id"
-        :name="project.projectKey"
-        @input="updateMilestones()"
-        >{{ project.name }}</b-checkbox
-      >
-    </template>
+  <div class="modal-content">
+    <form @submit.prevent="updateConditions">
+      <template v-for="project in projects">
+        <b-checkbox
+          :key="project.id"
+          v-model="selectedProjects"
+          :native-value="project.id"
+          :name="project.projectKey"
+          @input="updateMilestones()"
+          >{{ project.name }}</b-checkbox
+        >
+      </template>
 
-    <br />
-    <div class="count-form">
-      <b-field label="件数">
-        <b-input
-          id="count"
-          v-model="count"
-          type="number"
-          min="1"
-          max="100"
-          placeholder="件数"
-        />
-      </b-field>
-    </div>
+      <br />
+      <div class="count-form">
+        <b-field label="件数">
+          <b-input
+            id="count"
+            v-model="count"
+            type="number"
+            min="1"
+            max="100"
+            placeholder="件数"
+          />
+        </b-field>
+      </div>
 
-    <br />
-    <template v-for="status in statusList">
-      <b-checkbox
-        :key="status.id"
-        v-model="selectedStatus"
-        :native-value="status.id"
-        :name="status.name"
-        >{{ status.name }}</b-checkbox
-      >
-    </template>
+      <br />
+      <template v-for="status in statusList">
+        <b-checkbox
+          :key="status.id"
+          v-model="selectedStatus"
+          :native-value="status.id"
+          :name="status.name"
+          >{{ status.name }}</b-checkbox
+        >
+      </template>
 
-    <br />
-    <b-taginput
-      v-model="selectedMilstones"
-      :data="filteredMilstones"
-      autocomplete
-      :open-on-focus="true"
-      field="displayName"
-      icon="label"
-      placeholder="Add a milestone"
-      @typing="getFilteredTags"
-    ></b-taginput>
+      <br />
+      <!-- モーダルを閉じても消さない -->
+      <b-taginput
+        v-model="selectedMilstones"
+        :data="filteredMilstones"
+        autocomplete
+        :open-on-focus="true"
+        field="displayName"
+        icon="label"
+        placeholder="Add a milestone"
+        @typing="getFilteredTags"
+      ></b-taginput>
 
-    <br />
-    <b-radio v-model="assigneeId" :native-value="[ownId]">自分だけ</b-radio>
-    <b-radio v-model="assigneeId" :native-value="[]">全員</b-radio>
-    <b-button type="is-success" native-type="submit">更新</b-button>
-  </form>
+      <br />
+      <b-radio v-model="assigneeId" :native-value="[ownId]">自分だけ</b-radio>
+      <b-radio v-model="assigneeId" :native-value="[]">全員</b-radio>
+      <b-button type="is-success" native-type="submit">更新</b-button>
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -170,6 +173,7 @@ class IssueConditionList extends Vue {
 
     this.$store.dispatch('issue/asyncUpdateCondition', newConditions);
     this.updateIssues();
+    this.$emit('close');
   }
 }
 
@@ -177,6 +181,12 @@ export default IssueConditionList;
 </script>
 
 <style lang="scss" scoped>
+// TODO: 他のモーダルとの共通化
+.modal-content {
+  background: #ffffff;
+  height: 400px;
+  padding: 20px;
+}
 .count-form {
   width: 100px;
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IssueConditionList class="condition-list" @update="fetchIssues" />
+    <b-button type="is-primary" @click="openConditionDetail">変更</b-button>
     <div class="issue-list">
       <template v-if="loading">
         <p>Loading...</p>
@@ -98,6 +98,22 @@ class IssueList extends Vue {
         // TODO:
         console.error(error);
       });
+  }
+
+  /**
+   * 検索条件を設定するモーダルを開く
+   */
+  openConditionDetail(): void {
+    this.$buefy.modal.open({
+      parent: this,
+      component: IssueConditionList,
+      width: '85%',
+      events: {
+        update: () => {
+          this.fetchIssues();
+        },
+      },
+    });
   }
 }
 
