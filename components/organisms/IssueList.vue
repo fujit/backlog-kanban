@@ -1,6 +1,14 @@
 <template>
   <div>
-    <b-button type="is-primary" @click="openConditionDetail">変更</b-button>
+    <div class="condition-list">
+      <template v-for="(value, name) in conditions">
+        <b-taglist :key="name" attached>
+          <b-tag type="is-dark">{{ name }}</b-tag>
+          <b-tag type="is-info">{{ value }}</b-tag>
+        </b-taglist>
+      </template>
+      <b-button type="is-primary" @click="openConditionDetail">変更</b-button>
+    </div>
     <div class="issue-list">
       <template v-if="loading">
         <p>Loading...</p>
@@ -139,6 +147,11 @@ export default IssueList;
 }
 
 .condition-list {
-  margin: 10px;
+  margin: 20px 0 0 10px;
+  display: flex;
+
+  .tags {
+    margin-right: 10px;
+  }
 }
 </style>
