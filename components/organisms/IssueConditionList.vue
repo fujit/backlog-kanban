@@ -74,7 +74,7 @@ class IssueConditionList extends Vue {
   selectedProjects: number[] = this.conditions.projectId || [];
   selectedStatus: number[] = this.conditions.statusId || [];
   count: number = this.conditions.count || 100;
-  assigneeId: number[] = [this.ownId];
+  assigneeId: number[] = this.conditions.assigneeId || [this.ownId];
   milestones: milestone[] = [];
   selectedMilstones: milestone[] = [];
   filteredMilstones: milestone[] = this.milestones;
