@@ -74,3 +74,10 @@ class IssueCardList extends Vue {
 
 export default IssueCardList;
 </script>
+
+<style lang="scss" scoped>
+.card-list--contents {
+  height: 80vh;
+  overflow-y: scroll;
+}
+</style>
