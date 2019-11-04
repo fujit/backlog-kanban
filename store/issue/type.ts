@@ -67,6 +67,11 @@ export interface milestone {
   displayName: string;
 }
 
+export interface notification {
+  projectId: number;
+  issueId: number;
+}
+
 export interface S {
   conditions: condition;
   projects: project[];

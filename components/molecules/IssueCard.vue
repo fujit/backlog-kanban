@@ -3,6 +3,9 @@
     <section class="card">
       <div class="card-text">
         <p class="text-small">{{ issue.issueKey }}</p>
+        <div class="count-tag">
+          <b-tag :type="countTagColor">{{ notificationCount }}</b-tag>
+        </div>
         <p class="text-large card-summary">{{ issue.summary }}</p>
 
         <div class="card-text--sub">
@@ -29,13 +32,52 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import { issueInterface } from '~/store/issue/type';
+import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator';
+import axios from 'axios';
+import { issueInterface, notification } from '~/store/issue/type';
 
 @Component
 class Card extends Vue {
   @Prop({ type: Object, required: true })
   issue: issueInterface;
+  notifications: notification[] = [];
+  notificationCount: number = 0;
+
+  get countTagColor(): string {
+    return this.notificationCount > 0 ? 'is-danger' : '';
+  }
+
+  mounted() {
+    this.fetchNotifications();
+  }
+
+  @Watch('notifications')
+  onNotificationsChanged(newNotifications: notification[]) {
+    this.notificationCount = newNotifications.filter(
+      (notification) =>
+        notification.projectId === this.issue.projectId &&
+        notification.issueId === this.issue.id
+    ).length;
+  }
+
+  fetchNotifications() {
+    axios
+      .get(`${process.env.BACKLOG_BASE_URL}/api/v2/notifications?`, {
+        params: {
+          apiKey: process.env.BACKLOG_API_KEY,
+          count: 100,
+        },
+      })
+      .then((res) => {
+        const notifications = res.data
+          .filter((data: any) => !data.alreadyRead)
+          .map((element: any) => ({
+            projectId: element.project.id,
+            issueId: element.issue.id,
+          }));
+        this.notifications = notifications;
+      });
+  }
 }
 
 export default Card;
@@ -63,6 +105,12 @@ export default Card;
   &-summary {
     margin-top: 10px;
   }
+}
+
+.count-tag {
+  position: absolute;
+  top: 2%;
+  right: 2%;
 }
 
 .text-small {
