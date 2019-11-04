@@ -79,7 +79,19 @@ export interface S {
   statusList: status[];
 }
 
-export interface G {}
+export interface G {
+  conditions: condition;
+  projects: project[];
+  milestones: milestone[];
+  statusList: status[];
+}
+
+export interface RG {
+  'issue/conditions': G['conditions'];
+  'issue/projects': G['projects'];
+  milestones: G['milestones'];
+  statusList: G['statusList'];
+}
 
 export interface M {
   updateCondition: condition;

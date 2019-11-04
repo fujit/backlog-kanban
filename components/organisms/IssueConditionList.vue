@@ -70,7 +70,6 @@ import CloseButton from '~/components/atoms/CloseButton.vue';
   },
 })
 class IssueConditionList extends Vue {
-  // TODO: リロード時うまくいかない
   selectedProjects: number[] = this.conditions.projectId || [];
   selectedStatus: number[] = this.conditions.statusId || [];
   count: number = this.conditions.count || 100;
@@ -80,15 +79,15 @@ class IssueConditionList extends Vue {
   filteredMilstones: milestone[] = this.milestones;
 
   get conditions(): condition {
-    return this.$store.state.issue.conditions;
+    return this.$store.getters['issue/conditions'];
   }
 
   get projects(): project[] {
-    return this.$store.state.issue.projects;
+    return this.$store.getters['issue/projects'];
   }
 
   get statusList(): status[] {
-    return this.$store.state.issue.statusList;
+    return this.$store.getters['issue/statusList'];
   }
 
   get ownId(): number {

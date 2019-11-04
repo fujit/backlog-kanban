@@ -52,13 +52,15 @@ class IssueList extends Vue {
    * 状態一覧のうち、条件に指定したものだけを取得
    */
   get statusList(): status[] {
-    return this.$store.state.issue.statusList.filter((element: status) =>
-      this.$store.state.issue.conditions.statusId.includes(element.id)
+    return this.$store.getters['issue/statusList'].filter(
+      (element: status) =>
+        this.conditions.statusId &&
+        this.conditions.statusId.includes(element.id)
     );
   }
 
   get conditions(): condition {
-    return this.$store.state.issue.conditions;
+    return this.$store.getters['issue/conditions'];
   }
 
   mounted() {

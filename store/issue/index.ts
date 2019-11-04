@@ -1,4 +1,4 @@
-import { Mutations, Actions } from 'vuex';
+import { Mutations, Actions, Getters } from 'vuex';
 import { S, G, M, A, project } from './type';
 import axios from 'axios';
 
@@ -25,6 +25,21 @@ export const state = (): S => ({
     { id: 4, name: '完了' },
   ],
 });
+
+export const getters: Getters<S, G> = {
+  conditions(state) {
+    return state.conditions;
+  },
+  projects(state) {
+    return state.projects;
+  },
+  milestones(state) {
+    return state.milestones;
+  },
+  statusList(state) {
+    return state.statusList;
+  },
+};
 
 export const mutations: Mutations<S, M> = {
   updateCondition(state, conditions) {
