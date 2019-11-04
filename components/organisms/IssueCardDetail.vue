@@ -75,7 +75,7 @@ export default IssueCardDetail;
 }
 
 .card-detail-content {
-  padding: 10px;
+  padding: 20px;
 }
 
 .issue-description {
